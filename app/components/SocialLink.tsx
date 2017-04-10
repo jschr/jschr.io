@@ -26,7 +26,7 @@ const styles = {
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
-    marginRight: '1rem',
+    marginRight: '1.25rem',
     marginTop: '0.5rem',
     transform: 'translateX(0rem)',
     transition: 'transform 0.15s ease-in-out'
