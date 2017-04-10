@@ -9,6 +9,7 @@ export interface SSROptions {
   appProps: AppProps
   enableGoogleAnalytics: boolean
   trackingId: string
+  enableDevServer: boolean
 }
 
 export interface SSR {
@@ -16,9 +17,9 @@ export interface SSR {
   props: AppProps
 }
 
-export default function ssr({ appProps, enableGoogleAnalytics, trackingId }: SSROptions) {
+export default function ssr(options: SSROptions) {
   const { html: body, css, ids: cssIds } = renderStatic(() => {
-    return renderToString(<App {...appProps} />)
+    return renderToString(<App {...options.appProps} />)
   })
 
   const icons = []
@@ -28,10 +29,11 @@ export default function ssr({ appProps, enableGoogleAnalytics, trackingId }: SSR
     body,
     ssr: {
       cssIds,
-      props: appProps
+      props: options.appProps
     },
-    enableGoogleAnalytics,
-    trackingId
+    enableGoogleAnalytics: options.enableGoogleAnalytics,
+    trackingId: options.trackingId,
+    enableDevServer: options.enableDevServer
   }
 
   const html = `

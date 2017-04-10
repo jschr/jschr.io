@@ -4,8 +4,7 @@
   "main": "build/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "dotenv webpack -- -w --config ./app/webpack.config.ts",
-    "serve": "browser-sync start --server app/build",
+    "start": "dotenv webpack-dev-server -- --config ./app/webpack.config.ts --inline false",
     "clean": "rimraf ./build/app && rimraf ./build/app-package.zip",
     "build": "tsc",
     "copy": "copy ./package.json ./build/app && copy ./app/assets/* ./build",
@@ -50,7 +49,6 @@
     "@types/webfontloader": "^1.6.28",
     "awesome-typescript-loader": "^3.1.2",
     "aws-sdk": "^2.40.0",
-    "browser-sync": "^2.18.8",
     "copy": "^0.3.0",
     "cross-zip-cli": "^1.0.0",
     "rimraf": "^2.6.1",

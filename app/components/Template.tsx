@@ -8,6 +8,7 @@ export interface TemplateProps {
   ssr: SSR
   enableGoogleAnalytics: boolean
   trackingId: string
+  enableDevServer: boolean
 }
 
 export default function Template(props: TemplateProps) {
@@ -19,7 +20,7 @@ export default function Template(props: TemplateProps) {
         <meta charSet='utf-8' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name='apple-mobile-web-app-capable' content='yes' />
         <link rel='shortcut icon' href={require('../assets/favicon.png')} />
         <title>{`${name} | ${description}`}</title>
         <style>{props.css}</style>
@@ -37,6 +38,9 @@ export default function Template(props: TemplateProps) {
             ga('create', 'UA-97192878-1', 'auto');
             ga('send', 'pageview');
           ` }} />
+        }
+        { props.enableDevServer &&
+          <script src='http://localhost:8080/webpack-dev-server.js'></script>
         }
       </body>
     </html>

@@ -86,7 +86,8 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
         locals: {
           appProps,
           enableGoogleAnalytics: isProduction,
-          trackingId: process.env.GA_TRACKING_ID
+          trackingId: process.env.GA_TRACKING_ID,
+          enableDevServer: !isProduction
         }
       })
     ]
