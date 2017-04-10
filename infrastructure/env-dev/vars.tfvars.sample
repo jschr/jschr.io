@@ -2,10 +2,13 @@ region          = "us-east-1"
 aws_access_key  = ""
 aws_secret_key  = ""
 app_package     = "../../build/app-package.zip"
-domain          = "jschr.io"
+domain          = "my-domain.io"
 
 # twitter keys
 twitter_consumer_key          = ""
 twitter_consumer_secret       = ""
 twitter_access_token          = ""
 twitter_access_token_secret   = ""
+
+# mailgun
+mailgun_dkim                  = "k=rsa; ..."

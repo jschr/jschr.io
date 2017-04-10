@@ -4,6 +4,7 @@ variable "twitter_consumer_key"         { }
 variable "twitter_consumer_secret"      { }
 variable "twitter_access_token"         { }
 variable "twitter_access_token_secret"  { }
+variable "mailgun_dkim"                 { }
 
 data "aws_iam_policy_document" "website_bucket_policy" {
   # allows public reads from everyone to the s3 bucket
@@ -179,4 +180,40 @@ resource "aws_route53_record" "www" {
     zone_id                 = "${aws_cloudfront_distribution.s3_distribution.hosted_zone_id}"
     evaluate_target_health  = false
   }
+}
+
+# this below section sets up the mailgun route 53 records to recieve email for your domain.
+# you can forward the email to gmail (or another account) by adding a mailgun route
+# see: https://documentation.mailgun.com/api-routes.html#routes
+
+resource "aws_route53_record" "mailgun_spf" {
+  zone_id   = "${data.aws_route53_zone.domain.zone_id}"
+  name      = "${data.aws_route53_zone.domain.name}"
+  type      = "TXT"
+  ttl       = "300"
+  records   = ["v=spf1 include:mailgun.org ~all"]
+}
+
+resource "aws_route53_record" "mailgun_dkim" {
+  zone_id   = "${data.aws_route53_zone.domain.zone_id}"
+  name      = "smtp._domainkey.${data.aws_route53_zone.domain.name}"
+  type      = "TXT"
+  ttl       = "300"
+  records   = ["${var.mailgun_dkim}"]
+}
+
+resource "aws_route53_record" "mailgun_mx" {
+  zone_id   = "${data.aws_route53_zone.domain.zone_id}"
+  name      = "${data.aws_route53_zone.domain.name}"
+  type      = "MX"
+  ttl       = "300"
+  records   = ["10 mxa.mailgun.org", "10 mxb.mailgun.org"]
+}
+
+resource "aws_route53_record" "mailgun_tracking" {
+  zone_id   = "${data.aws_route53_zone.domain.zone_id}"
+  name      = "email.${data.aws_route53_zone.domain.name}"
+  type      = "CNAME"
+  ttl       = "300"
+  records   = ["mailgun.org"]
 }

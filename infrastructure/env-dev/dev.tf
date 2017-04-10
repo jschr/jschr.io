@@ -7,6 +7,7 @@ variable "twitter_consumer_key"         { }
 variable "twitter_consumer_secret"      { }
 variable "twitter_access_token"         { }
 variable "twitter_access_token_secret"  { }
+variable "mailgun_dkim"                 { }
 
 provider "aws" {
   region        = "${var.region}"
@@ -23,4 +24,5 @@ module "app" {
   twitter_consumer_secret       = "${var.twitter_consumer_secret}"
   twitter_access_token          = "${var.twitter_access_token}"
   twitter_access_token_secret   = "${var.twitter_access_token_secret}"
+  mailgun_dkim                  = "${var.mailgun_dkim}"
 }
