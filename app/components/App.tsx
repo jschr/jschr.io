@@ -8,6 +8,7 @@ import Github from './Github'
 import Twitter from './Twitter'
 import Medium from './Medium'
 import LinkedIn from './LinkedIn'
+import Contact from './Contact'
 
 css.global('html', {
   fontSize: '12px',
@@ -77,6 +78,7 @@ export default class App extends React.Component<AppProps, {}> {
           <Medium username={medium} summary={mediumSummary} />
           <LinkedIn username={linkedIn} summary={linkedInSummary} />
         </Content>
+        <Contact email={email} />
       </Container>
     )
   }
