@@ -5,10 +5,18 @@ const styles = {
   container: css({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: '2.5rem',
+    alignItems: 'flex-start',
+    padding: '1.25rem 0',
     textDecoration: 'none',
-    color: '#fff'
+    color: '#fff',
+
+    ':hover .icon': {
+      transform: 'translateX(1rem)'
+    },
+
+    ':hover .text': {
+      transform: 'translateX(1.5rem)'
+    }
   }),
 
   icon: css({
@@ -18,12 +26,17 @@ const styles = {
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
-    marginRight: '1rem'
+    marginRight: '1rem',
+    marginTop: '0.5rem',
+    transform: 'translateX(0rem)',
+    transition: 'transform 0.15s ease-in-out'
   }),
 
   textContainer: css({
     display: 'flex',
     flexDirection: 'column',
+    transform: 'translateX(0rem)',
+    transition: 'transform 0.15s ease-in-out 0.025s',
   }),
 
   label: css({
@@ -48,8 +61,8 @@ export interface SocialLinkProps {
 export default function SocialLink({ icon, label, text, href }: SocialLinkProps) {
   return (
     <a href={href} {...styles.container}>
-      <div {...styles.icon} style={{ backgroundImage: `url(${icon})` }}/>
-      <div {...styles.textContainer}>
+      <div className='icon' {...styles.icon} style={{ backgroundImage: `url(${icon})` }}/>
+      <div className='text' {...styles.textContainer}>
         <div {...styles.label}>{ label }</div>
         <div {...styles.text}>{ text }</div>
       </div>

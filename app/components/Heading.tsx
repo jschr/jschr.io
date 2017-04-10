@@ -4,7 +4,7 @@ import { css } from 'glamor'
 const styles = {
   container: css({
     borderBottom: '2px solid #ff2353',
-    marginBottom: '2.5rem'
+    marginBottom: '1.5rem'
   }),
 
   name: css({

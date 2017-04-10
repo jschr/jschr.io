@@ -8,7 +8,11 @@ const styles = {
     right: 0,
     padding: '4% 5%',
     textDecoration: 'none',
-    color: '#fff'
+    color: '#fff',
+
+    ':hover .email': {
+      textDecoration: 'underline'
+    }
   }),
 
   label: css({
@@ -35,7 +39,7 @@ export default function Contact({ email }: ContactProps) {
   return (
     <a href={href} {...styles.container}>
       <div {...styles.label}>contact me</div>
-      <div {...styles.email}>{email}</div>
+      <div className='email' {...styles.email}>{email}</div>
     </a>
   )
 }
