@@ -14,7 +14,7 @@ const styles = {
     marginTop: 0,
     marginBottom: '0.5rem',
 
-    '@media screen and (max-width: 480px)': {
+    '@media screen and (max-width: 480px), screen and (max-height: 480px)': {
       fontSize: '1.5rem',
     }
   }),
@@ -28,7 +28,7 @@ const styles = {
     marginTop: 0,
     marginBottom: '1rem',
 
-    '@media screen and (max-width: 480px)': {
+    '@media screen and (max-width: 480px), screen and (max-height: 480px)': {
       fontSize: '2rem',
     }
   })

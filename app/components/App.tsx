@@ -18,15 +18,21 @@ css.global('html', {
 // hack to workaround media queries support with css.global
 // https://github.com/threepointone/glamor/issues/202
 css.insert(`
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 640px), screen and (max-height: 640px) {
     html {
       font-size: 10px;
     }
   }
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 480px), screen and (max-height: 480px) {
     html {
       font-size: 9px;
+    }
+  }
+
+  @media screen and (max-width: 320px), screen and (max-height: 320px) {
+    html {
+      font-size: 8px;
     }
   }
 `)
