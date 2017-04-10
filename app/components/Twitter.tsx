@@ -14,7 +14,7 @@ export interface TwitterProps {
 export default function Twitter({ username, summary }: TwitterProps) {
   const href = `https://twitter.com/@${username}`
   const icon = require('../assets/twitter.svg')
-  const text = `tweeted ${moment(summary.latestTweetCreatedAt).fromNow()}`
+  const text = `tweeted ${moment(new Date(summary.latestTweetCreatedAt)).fromNow()}`
 
   return (
     <SocialLink href={href} icon={icon} label='my thoughts' text={text} />
