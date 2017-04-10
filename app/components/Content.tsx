@@ -5,7 +5,7 @@ const styles = {
   content: css({
     boxSizing: 'border-box',
     width: '100%',
-    padding: '2rem',
+    padding: '2.5rem',
     maxWidth: '54rem'
   })
 }
