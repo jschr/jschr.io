@@ -13,7 +13,7 @@ export default async function getProps(): Promise<AppProps> {
   const twitter = '_jschr'
   const medium = '_jschr'
   const linkedIn = 'jordan-schroter'
-  const linkedInSummary = { currentPosition: 'CTO / Co-Founder at SPIN.io' }
+  const linkedInSummary = { currentPosition: 'cto / co-founder at spin.io' }
 
   const [ githubSummary, twitterSummary, mediumSummary ] = await Promise.all([
     getGithubSummary(github),
