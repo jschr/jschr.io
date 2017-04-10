@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "outDir": "./build/app",
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "removeComments": false,
+    "noImplicitAny": false
+  },
+  "types": [
+    "node"
+  ],
+  "include": [
+    "app/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>Linkedin</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-279.000000, -655.000000)">
+            <g id="Links" transform="translate(274.000000, 344.000000)">
+                <g id="Linked-In" transform="translate(5.000000, 307.000000)">
+                    <g id="Linkedin" transform="translate(0.000000, 4.000000)">
+                        <circle id="Oval-1-Copy-5" fill="#0976B4" cx="30" cy="30" r="30"></circle>
+                        <path d="M18.3130952,22.2572896 C20.3784286,22.2572896 22.0527619,20.7303796 22.0527619,18.8447658 C22.0527619,16.9574836 20.3784286,15.4285714 18.3130952,15.4285714 C16.2457619,15.4285714 14.5714286,16.9574836 14.5714286,18.8447658 C14.5714286,20.7303796 16.2457619,22.2572896 18.3130952,22.2572896" id="Fill-182" fill="#FFFFFF"></path>
+                        <polygon id="Fill-183" fill="#FFFFFF" points="15.4285714 44.20946 22.1385714 44.20946 22.1385714 24.8571429 15.4285714 24.8571429"></polygon>
+                        <path d="M31.5561429,33.4460877 C31.5561429,31.2267959 32.6061429,29.0565549 35.1168095,29.0565549 C37.6274762,29.0565549 38.2448095,31.2267959 38.2448095,33.3930329 L38.2448095,43.9622803 L44.9248095,43.9622803 L44.9248095,32.96092 C44.9248095,25.317694 40.4068095,24 37.6274762,24 C34.8504762,24 33.3188095,24.9393033 31.5561429,27.2153202 L31.5561429,24.6099632 L24.8571429,24.6099632 L24.8571429,43.9622803 L31.5561429,43.9622803 L31.5561429,33.4460877 Z" id="Fill-184" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

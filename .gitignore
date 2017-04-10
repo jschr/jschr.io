@@ -1,0 +1,10 @@
+node_modules/
+build/
+app/config.ts
+.env
+*.log
+
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars

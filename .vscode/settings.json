@@ -1,0 +1,5 @@
+{
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "tslint.nodePath": "./node_modules",
+  "tslint.configFile": "./tslint.json"
+}
