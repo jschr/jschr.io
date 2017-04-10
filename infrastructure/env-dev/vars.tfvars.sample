@@ -1,17 +1,32 @@
+# your domain
+# assumes you have a hosted zone of the same name in route 53
+# running terraform will create the necessary A, CNAME, TXT, and MX records
+domain          = "example.com"
+
+# your preferred region
 region          = "us-east-1"
-aws_access_key  = ""
-aws_secret_key  = ""
+
+# aws access key and secret (cat ~/.aws/credentials)
+aws_access_key  = "..."
+aws_secret_key  = "..."
+
+# app package location, you dont need to change this unless you modify the build process
 app_package     = "../../build/app-package.zip"
-domain          = "my-domain.io"
 
 # twitter keys
-twitter_consumer_key          = ""
-twitter_consumer_secret       = ""
-twitter_access_token          = ""
-twitter_access_token_secret   = ""
+# go to https://apps.twitter.com/app/new and create a new application
+# generate an access token and secret
+twitter_consumer_key          = "..."
+twitter_consumer_secret       = "..."
+twitter_access_token          = "..."
+twitter_access_token_secret   = "..."
 
 # mailgun
+# go to https://app.mailgun.com/app/domains and create a new domain
+# grab the dkim string and paste it below, the rest values are provided in the terraform module
 mailgun_dkim  = "k=rsa; ..."
 
 # google analytics
+# go to https://analytics.google.com and create a new property
+# paste the tracking code below
 ga_tracking_id  = "UA-XXXXXX-1"
