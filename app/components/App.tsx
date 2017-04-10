@@ -24,7 +24,7 @@ css.insert(`
     }
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 480px) {
     html {
       font-size: 9px;
     }

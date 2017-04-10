@@ -12,7 +12,11 @@ const styles = {
     fontWeight: 400,
     color: '#bbb',
     marginTop: 0,
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
+
+    '@media screen and (max-width: 480px)': {
+      fontSize: '1.5rem',
+    }
   }),
 
   description: css({
@@ -22,7 +26,11 @@ const styles = {
     textTransform: 'uppercase',
     letterSpacing: '0.1rem',
     marginTop: 0,
-    marginBottom: '1rem'
+    marginBottom: '1rem',
+
+    '@media screen and (max-width: 480px)': {
+      fontSize: '2rem',
+    }
   })
 }
 
