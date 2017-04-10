@@ -20,11 +20,11 @@ export default function Github({ username, summary }: GithubProps) {
   let text
 
   if (summary.following) {
-    text = `started following ${summary.following}.`
+    text = `started following ${summary.following}`
   } else if (summary.commented) {
-    text = `commented on ${summary.commented}.`
+    text = `commented on ${summary.commented}`
   } else if (summary.pushed) {
-    text = `pushed ${summary.commits} commits to ${summary.pushed}.`
+    text = `pushed ${summary.commits} commits to ${summary.pushed}`
   }
 
   return (
