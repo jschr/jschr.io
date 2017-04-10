@@ -10,7 +10,7 @@ import Medium from './Medium'
 import LinkedIn from './LinkedIn'
 
 css.global('html', {
-  fontSize: '16px',
+  fontSize: '14px',
   height: '100%'
 })
 
