@@ -41,13 +41,15 @@ const styles = {
 
   label: css({
     fontSize: '1.75rem',
-    marginBottom: '0.25rem'
+    marginBottom: '0.25rem',
+    textTransform: 'lowercase'
   }),
 
   text: css({
     fontSize: '1.375rem',
     color: '#bbb',
-    marginBottom: '0.25rem'
+    marginBottom: '0.25rem',
+    textTransform: 'lowercase'
   })
 }
 
