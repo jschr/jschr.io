@@ -15,6 +15,22 @@ css.global('html', {
   height: '100%'
 })
 
+// hack to workaround media queries support with css.global
+// https://github.com/threepointone/glamor/issues/202
+css.insert(`
+  @media screen and (max-width: 640px) {
+    html {
+      font-size: 10px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    html {
+      font-size: 9px;
+    }
+  }
+`)
+
 css.global('body', {
   fontFamily: 'Lato, sans-serif',
   fontWeight: 400,
