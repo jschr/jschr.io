@@ -7,7 +7,7 @@ import linkedInProfileParser = require('linkedin-public-profile-parser')
 
 export default async function getProps(): Promise<AppProps> {
   const name = 'Jordan Schroter'
-  const description = 'Developer & Product Designer'
+  const description = 'Coder & UX Enthusiast'
   const email = 'hello@jschr.io'
   const github = 'jschr'
   const twitter = '_jschr'
