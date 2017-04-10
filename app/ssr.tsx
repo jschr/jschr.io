@@ -5,10 +5,10 @@ import { renderStatic } from 'glamor/server'
 import Template, { TemplateProps } from './components/Template'
 import App, { AppProps } from './components/App'
 
-export interface HtmlWebpackPlugin {
-  files: {
-    entry: string
-  }
+export interface SSROptions {
+  appProps: AppProps
+  enableGoogleAnalytics: boolean
+  trackingId: string
 }
 
 export interface SSR {
@@ -16,7 +16,7 @@ export interface SSR {
   props: AppProps
 }
 
-export default function ssr({ appProps }) {
+export default function ssr({ appProps, enableGoogleAnalytics, trackingId }: SSROptions) {
   const { html: body, css, ids: cssIds } = renderStatic(() => {
     return renderToString(<App {...appProps} />)
   })
@@ -29,7 +29,9 @@ export default function ssr({ appProps }) {
     ssr: {
       cssIds,
       props: appProps
-    }
+    },
+    enableGoogleAnalytics,
+    trackingId
   }
 
   const html = `

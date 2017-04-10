@@ -4,7 +4,7 @@
   "main": "build/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "dotenv webpack -- -w --config ./app/webpack.config.ts --env.NODE_ENV development",
+    "start": "dotenv webpack -- -w --config ./app/webpack.config.ts",
     "serve": "browser-sync start --server app/build",
     "clean": "rimraf ./build/app && rimraf ./build/app-package.zip",
     "build": "tsc",

@@ -25,8 +25,8 @@ export default function handler(event, context, callback) {
 }
 
 async function run(): Promise<any> {
-  // create production webpack config
-  const config = await createWebpackConfig({ NODE_ENV: 'production' })
+  // create webpack config from latest latest props
+  const config = await createWebpackConfig()
   // compile with webpack
   const files = await compile(config)
   // upload files to s3

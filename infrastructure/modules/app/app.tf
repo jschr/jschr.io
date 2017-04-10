@@ -5,6 +5,7 @@ variable "twitter_consumer_secret"      { }
 variable "twitter_access_token"         { }
 variable "twitter_access_token_secret"  { }
 variable "mailgun_dkim"                 { }
+variable "ga_tracking_id"               { }
 
 data "aws_iam_policy_document" "website_bucket_policy" {
   # allows public reads from everyone to the s3 bucket
@@ -85,6 +86,7 @@ resource "aws_lambda_function" "website_generator" {
       TWITTER_CONSUMER_SECRET       = "${var.twitter_consumer_secret}"
       TWITTER_ACCESS_TOKEN          = "${var.twitter_access_token}"
       TWITTER_ACCESS_TOKEN_SECRET   = "${var.twitter_access_token_secret}"
+      GA_TRACKING_ID                = "${var.ga_tracking_id}"
     }
   }
 }

@@ -11,4 +11,7 @@ twitter_access_token          = ""
 twitter_access_token_secret   = ""
 
 # mailgun
-mailgun_dkim                  = "k=rsa; ..."
+mailgun_dkim  = "k=rsa; ..."
+
+# google analytics
+ga_tracking_id  = "UA-XXXXXX-1"

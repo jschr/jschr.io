@@ -2,15 +2,14 @@ import * as path from 'path'
 import * as webpack from 'webpack'
 import * as StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin'
 
-import ssr from './ssr'
 import getProps from './getProps'
 
 interface Env {
   NODE_ENV?: string
 }
 
-export default async function createWebpackConfig(env: Env): Promise<webpack.Configuration> {
-  const isProduction = env.NODE_ENV === 'production'
+export default async function createWebpackConfig(): Promise<webpack.Configuration> {
+  const isProduction = process.env.NODE_ENV === 'production'
   const appProps = await getProps()
 
   return {
@@ -65,7 +64,7 @@ export default async function createWebpackConfig(env: Env): Promise<webpack.Con
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify(env.NODE_ENV)
+          'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }
       }),
 
@@ -85,7 +84,9 @@ export default async function createWebpackConfig(env: Env): Promise<webpack.Con
       new StaticSiteGeneratorPlugin({
         paths: ['/'],
         locals: {
-          appProps
+          appProps,
+          enableGoogleAnalytics: isProduction,
+          trackingId: process.env.GA_TRACKING_ID
         }
       })
     ]
