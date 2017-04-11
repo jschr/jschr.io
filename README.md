@@ -34,7 +34,6 @@ git clone --depth=1 git@github.com:jschr/jschr.io.git example.com
 
 Install app dependencies
 ```
-cd app
 yarn install
 ```
 
