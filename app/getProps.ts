@@ -1,38 +1,34 @@
-import { AppProps } from './components/App'
 import axios from 'axios'
 import * as Twit from 'twit'
 import { promisify } from 'bluebird'
 import feed = require('rss-to-json')
-import linkedInProfileParser = require('linkedin-public-profile-parser')
 
-export default async function getProps(): Promise<AppProps> {
-  const name = 'Jordan Schroter'
-  const description = 'Coder & UX Enthusiast'
-  const email = 'hello@jschr.io'
-  const github = 'jschr'
-  const twitter = '_jschr'
-  const medium = '_jschr'
-  const linkedIn = 'jordan-schroter'
-  const linkedInSummary = { currentPosition: 'cto / co-founder at spin.io' }
+import { AppProps } from './components/App'
 
+export interface Options {
+  name: string
+  description: string
+  email: string
+  github: string
+  twitter: string
+  medium: string
+  linkedIn: string
+  linkedInPosition: string
+}
+
+export default async function getProps(opts: Options): Promise<AppProps> {
   const [ githubSummary, twitterSummary, mediumSummary ] = await Promise.all([
-    getGithubSummary(github),
-    getTwitterSummary(twitter),
-    getMediumSummary(medium),
+    getGithubSummary(opts.github),
+    getTwitterSummary(opts.twitter),
+    getMediumSummary(opts.medium)
   ])
 
   return {
-    name,
-    description,
-    email,
-    github,
+    ...opts,
     githubSummary,
-    twitter,
     twitterSummary,
-    medium,
     mediumSummary,
-    linkedIn,
-    linkedInSummary
+    linkedInSummary: { currentPosition: opts.linkedInPosition }
   }
 }
 

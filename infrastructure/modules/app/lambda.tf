@@ -55,6 +55,14 @@ resource "aws_lambda_function" "website_generator" {
       TWITTER_ACCESS_TOKEN          = "${var.twitter_access_token}"
       TWITTER_ACCESS_TOKEN_SECRET   = "${var.twitter_access_token_secret}"
       GA_TRACKING_ID                = "${var.ga_tracking_id}"
+      NAME                          = "${var.name}"
+      DESCRIPTION                   = "${var.description}"
+      EMAIL                         = "${var.email}"
+      GITHUB_USERNAME               = "${var.github_username}"
+      TWITTER_USERNAME              = "${var.twitter_username}"
+      MEDIUM_USERNAME               = "${var.medium_username}"
+      LINKEDIN_USERNAME             = "${var.linkedin_username}"
+      LINKEDIN_POSITION             = "${var.linkedin_position}"
     }
   }
 }

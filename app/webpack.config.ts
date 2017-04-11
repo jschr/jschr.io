@@ -10,7 +10,17 @@ interface Env {
 
 export default async function createWebpackConfig(): Promise<webpack.Configuration> {
   const isProduction = process.env.NODE_ENV === 'production'
-  const appProps = await getProps()
+
+  const appProps = await getProps({
+    name: process.env.NAME,
+    description: process.env.DESCRIPTION,
+    email: process.env.EMAIL,
+    github: process.env.GITHUB_USERNAME,
+    twitter: process.env.TWITTER_USERNAME,
+    medium: process.env.MEDIUM_USERNAME,
+    linkedIn: process.env.LINKEDIN_USERNAME,
+    linkedInPosition: process.env.LINKEDIN_POSITION
+  })
 
   return {
     devtool: 'source-map',

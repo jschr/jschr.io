@@ -6,3 +6,11 @@ variable "twitter_access_token"         { }
 variable "twitter_access_token_secret"  { }
 variable "mailgun_dkim"                 { }
 variable "ga_tracking_id"               { }
+variable "name"                         { }
+variable "description"                  { }
+variable "email"                        { }
+variable "github_username"              { }
+variable "twitter_username"             { }
+variable "medium_username"              { }
+variable "linkedin_username"            { }
+variable "linkedin_position"            { }
