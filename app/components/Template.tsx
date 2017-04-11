@@ -16,8 +16,8 @@ export default function Template(props: TemplateProps) {
   const { name, description } = props.ssr.props
 
   return (
-    <html lang='en'>
-      <head data-timestamp={(new Date()).toISOString()}>
+    <html lang='en' data-timestamp={(new Date()).toISOString()}>
+      <head>
         <meta charSet='utf-8' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
