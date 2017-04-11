@@ -4,7 +4,6 @@ variable "twitter_consumer_key"         { }
 variable "twitter_consumer_secret"      { }
 variable "twitter_access_token"         { }
 variable "twitter_access_token_secret"  { }
-variable "mailgun_dkim"                 { }
 variable "ga_tracking_id"               { }
 variable "name"                         { }
 variable "description"                  { }
@@ -14,3 +13,4 @@ variable "twitter_username"             { }
 variable "medium_username"              { }
 variable "linkedin_username"            { }
 variable "linkedin_position"            { }
+variable "mailgun_smtp_password"        { }

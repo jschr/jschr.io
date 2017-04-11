@@ -11,7 +11,8 @@ aws_secret_key  = "..."
 
 # your domain
 # assumes you have a hosted zone of the same name in route 53
-# running terraform will create the necessary A, CNAME, TXT, and MX records
+# this is also the name of the domain that will be created in mailgun
+# running terraform will create the necessary A, CNAME, TXT, and MX records in route 53
 domain  = "jschr.io"
 
 # your information
@@ -35,17 +36,22 @@ twitter_access_token          = "..."
 twitter_access_token_secret   = "..."
 
 # mailgun
-# go to https://app.mailgun.com/app/domains and create a new domain
-# grab the dkim string and paste it below, the rest values are provided in the terraform module
+# create an account at https://www.mailgun.com if you don't have one
+# get your api key from the accounts page: https://app.mailgun.com/app/account/security
 #
-# you can also setup mailgun to forward all emails to another account (ie. gmail) using Mailgun routes.
-# checkout the docs for how to setup such a route: https://documentation.mailgun.com/api-routes.html
-# You can also setup the route through the Admin UI at: https://app.mailgun.com/app/routes
-#   Example catch-all route:
-#       Type: Catch All
-#       Actions: [x] forward
+# you will need to manully trigger domain verification through mailgun after the first deploy
+# if you don't want to wait 24 hours: https://app.mailgun.com/app/domains
+#
+# you can setup mailgun to forward all emails to another account (ie. gmail) using routes
+# setup the route through the admin ui at: https://app.mailgun.com/app/routes
+#
+#   example catch-all route:
+#       type: catch all
+#       actions: [x] forward
 #         myaccount@gmail.com
-mailgun_dkim  = "k=rsa; ..."
+#
+mailgun_api_key         = "..."
+mailgun_smtp_password   = "..."
 
 # google analytics
 # go to https://analytics.google.com and create a new property
