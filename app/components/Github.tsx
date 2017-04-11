@@ -28,6 +28,6 @@ export default function Github({ username, summary }: GithubProps) {
   }
 
   return (
-    <SocialLink href={href} icon={icon} label='my code' text={text} />
+    <SocialLink href={href} icon={icon} label='my code' text={text} color='#4183C4' />
   )
 }

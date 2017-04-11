@@ -17,6 +17,6 @@ export default function Twitter({ username, summary }: TwitterProps) {
   const text = `tweeted ${moment(new Date(summary.latestTweetCreatedAt)).fromNow()}`
 
   return (
-    <SocialLink href={href} icon={icon} label='my thoughts' text={text} />
+    <SocialLink href={href} icon={icon} label='my thoughts' text={text} color='#55ACEE' />
   )
 }

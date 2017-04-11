@@ -3,6 +3,7 @@ import { css } from 'glamor'
 
 const styles = {
   container: css({
+    position: 'relative',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -16,6 +17,10 @@ const styles = {
 
     ':hover .text': {
       transform: 'translateX(1.5rem)'
+    },
+
+    ':hover .underline': {
+      transform: 'translateX(0%) scaleX(1)',
     }
   }),
 
@@ -50,23 +55,35 @@ const styles = {
     color: '#bbb',
     marginBottom: '0.25rem',
     textTransform: 'lowercase'
+  }),
+
+  underline: css({
+    position: 'absolute',
+    bottom: '-0.75rem',
+    left: 0,
+    right: 0,
+    height: 2,
+    transform: 'translateX(-50%) scaleX(0)',
+    transition: 'transform 0.15s ease-in-out 0.025s',
   })
 }
 
 export interface SocialLinkProps {
   icon: string
-  label: React.ReactNode
-  text: React.ReactNode
+  label: string
+  text: string
   href: string
+  color: string
 }
 
-export default function SocialLink({ icon, label, text, href }: SocialLinkProps) {
+export default function SocialLink({ icon, label, text, href, color }: SocialLinkProps) {
   return (
     <a href={href} {...styles.container}>
       <div className='icon' {...styles.icon} style={{ backgroundImage: `url(${icon})` }}/>
       <div className='text' {...styles.textContainer}>
         <div {...styles.label}>{ label }</div>
         <div {...styles.text}>{ text }</div>
+        <div className='underline' {...styles.underline} style={{ backgroundColor: color }} />
       </div>
     </a>
   )

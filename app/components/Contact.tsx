@@ -10,8 +10,8 @@ const styles = {
     textDecoration: 'none',
     color: '#fff',
 
-    ':hover .email': {
-      textDecoration: 'underline'
+    ':hover .underline': {
+      transform: 'translateY(0%) scaleY(1)',
     }
   }),
 
@@ -26,6 +26,21 @@ const styles = {
     fontSize: '1.75rem',
     letterSpacing: '0.05rem',
     fontWeight: 600
+  }),
+
+  textContainer: css({
+    position: 'relative'
+  }),
+
+  underline: css({
+    position: 'absolute',
+    bottom: '-0.75rem',
+    left: 0,
+    right: 0,
+    height: 2,
+    background: '#fff',
+    transform: 'translateY(100%) scaleY(0)',
+    transition: 'transform 0.15s ease-in-out',
   })
 }
 
@@ -38,8 +53,11 @@ export default function Contact({ email }: ContactProps) {
 
   return (
     <a href={href} {...styles.container}>
-      <div {...styles.label}>contact me</div>
-      <div className='email' {...styles.email}>{email}</div>
+      <div {...styles.textContainer}>
+        <div {...styles.label}>contact me</div>
+        <div {...styles.email}>{email}</div>
+        <div className='underline' {...styles.underline} />
+      </div>
     </a>
   )
 }

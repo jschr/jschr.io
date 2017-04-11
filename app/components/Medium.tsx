@@ -16,6 +16,6 @@ export default function Medium({ username, summary }: MediumProps) {
   const text = `wrote about "${summary.latestStory}"`
 
   return (
-    <SocialLink href={href} icon={icon} label='my stories' text={text} />
+    <SocialLink href={href} icon={icon} label='my stories' text={text} color='#fff' />
   )
 }
