@@ -5,6 +5,7 @@ The stack that powers my powers my [personal website](http://jschr.io).
 Featuring
 
  * [React](https://facebook.github.io/react/)
+ * [Glamor](https://github.com/threepointone/glamor/)
  * [Webpack 2](https://webpack.js.org/)
  * [Webpack Static Site Generator](https://github.com/markdalgleish/static-site-generator-webpack-plugin)
  * [Terraform](https://www.terraform.io/)
@@ -23,29 +24,34 @@ Terraform is used to declaratively define and deploy all the required infrastruc
 ## Quick start
 
 Install terraform from the [downloads page](https://www.terraform.io/downloads.html)
-```
+
+```bash
 open https://www.terraform.io/downloads.html
 ```
 
 Clone the repository (without history)
-```
+
+```bash
 git clone --depth=1 git@github.com:jschr/jschr.io.git example.com
 ```
 
 Install app dependencies
-```
+
+```bash
 yarn install
 ```
 
 Set environment variables
-```
+
+```bash
 cd instructure/env-dev
 mv vars.tfvars.sample vars.tfvars # rename sample file
 open vars.tfvars # set env vars
 ```
 
 Development
-```
+
+```bash
 mv .env.sample .env # rename sample file
 open .env # set env vars for development
 
@@ -54,7 +60,8 @@ open localhost:8080
 ```
 
 Deploy infrastructure
-```
+
+```bash
 yarn run terraform-plan # review the infrastructure changes
 yarn run deploy
 ```
@@ -62,6 +69,6 @@ yarn run deploy
 Deploying will take a few minutes but you'll need to wait about 15-20 minutes before the CloudFront distribution is created. By then the Lambda function should have ran to generate the website.
 
 ## Manually triggering the Lambda
-You can test the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). Then go to Functions -> website_generator -> Test. If it ran successfully you will see the result of the CloudFront invalidation.
+You can run the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). Then go to Functions -> website_generator -> Test. If it ran successfully you will see the result of the CloudFront invalidation.
 
 
