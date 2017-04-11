@@ -1,4 +1,4 @@
-# A static website generator
+# Static website generator
 
 The stack that powers my powers my [personal website](http://jschr.io).
 
