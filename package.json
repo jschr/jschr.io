@@ -15,9 +15,6 @@
     "deploy": "npm run clean && npm run build && npm run copy && npm run install-production && npm run pack && npm run terraform-apply"
   },
   "dependencies": {
-    "@types/bluebird": "^3.5.2",
-    "@types/twit": "^2.2.4",
-    "@types/webpack": "^2.2.14",
     "axios": "^0.16.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
@@ -41,11 +38,14 @@
     "webpack": "^2.3.3"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.2",
     "@types/aws-sdk": "^0.0.42",
     "@types/node": "^7.0.12",
     "@types/react": "^15.0.21",
     "@types/react-dom": "^0.14.23",
+    "@types/twit": "^2.2.4",
     "@types/webfontloader": "^1.6.28",
+    "@types/webpack": "^2.2.14",
     "awesome-typescript-loader": "^3.1.2",
     "aws-sdk": "^2.40.0",
     "copy": "^0.3.0",
