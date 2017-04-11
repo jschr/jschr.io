@@ -1,4 +1,4 @@
-# jschr.io - a static website generator boilerplate
+# jschr.io - a static website generator
 
 The stack that powers my powers my [personal website](http://jschr.io).
 
@@ -16,9 +16,9 @@ Featuring
 
  ## How it works
 
-A scheduled Lambda function fetches a summary of my latest activity from Github, Twitter, and Medium. It then generates a new static website using a this [webpack config](app/webpack.config.ts) and uploads the resulting build is uploaded to S3.
+A scheduled Lambda function fetches a summary of my latest activity from Github, Twitter, and Medium. It then generates a new static website using a this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
 
-Terraform is used to declaratively define and deploy all the required infrastructure to AWS after [setting a few environment variables](infrastructure/env-dev/vars.tf.sample) -- including a CloudFront distribution for super fast page loads and Route53 entries for your domain and emails (via Mailgun).
+Terraform is used to declaratively define and deploy all the required infrastructure to AWS after [setting a few environment variables](infrastructure/env-dev/vars.tfvars.sample) -- including a CloudFront distribution for super fast page loads and Route53 entries for your domain and emails (via Mailgun).
 
 ## Quick start
 
@@ -41,14 +41,15 @@ yarn install
 Set environment variables
 ```
 cd instructure/env-dev
-mv vars.tfvars.sample vars.tfvars
-open vars.tfvars
+mv vars.tfvars.sample vars.tfvars # rename sample file
+open vars.tfvars # set env vars
 ```
 
 Development
 ```
-mv .env.sample .env
-open .env
+mv .env.sample .env # rename sample file
+open .env # set env vars for development
+
 yarn start # starts webpack dev server
 open localhost:8080
 ```
