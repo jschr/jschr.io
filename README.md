@@ -32,9 +32,9 @@ Clone the repository (without history)
 git clone --depth=1 git@github.com:jschr/jschr.io.git example.com
 ```
 
-Install NPM dependencies
+Install app dependencies
 ```
-cd example.com
+cd app
 yarn install
 ```
 
