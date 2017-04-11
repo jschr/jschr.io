@@ -4,6 +4,7 @@ import { SSR } from '../ssr'
 
 export interface TemplateProps {
   css: string
+  js: string[]
   body: string
   ssr: SSR
   enableGoogleAnalytics: boolean
@@ -28,6 +29,7 @@ export default function Template(props: TemplateProps) {
       <body>
         <div id='react-root' dangerouslySetInnerHTML={{ __html: props.body }} />
         <script dangerouslySetInnerHTML={{ __html: `window.ssr = ${JSON.stringify(props.ssr)}` }} />
+        { props.js.map(src => <script src={src} />) }
         { props.enableGoogleAnalytics && props.trackingId &&
           <script dangerouslySetInnerHTML={{ __html: `
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

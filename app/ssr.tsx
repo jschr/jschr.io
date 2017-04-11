@@ -9,7 +9,8 @@ export interface SSROptions {
   appProps: AppProps
   enableGoogleAnalytics: boolean
   trackingId: string
-  enableDevServer: boolean
+  enableDevServer: boolean,
+  webpackStats: any
 }
 
 export interface SSR {
@@ -18,14 +19,15 @@ export interface SSR {
 }
 
 export default function ssr(options: SSROptions) {
+  const assets = Object.keys(options.webpackStats.compilation.assets)
+  const js = assets.filter(value => value.match(/\.js$/))
   const { html: body, css, ids: cssIds } = renderStatic(() => {
     return renderToString(<App {...options.appProps} />)
   })
 
-  const icons = []
-
   const templateProps = {
     css,
+    js,
     body,
     ssr: {
       cssIds,
