@@ -22,7 +22,7 @@ Terraform is used to declaratively define and deploy all the required infrastruc
 
 ## Quick start
 
-Install terraform
+Install terraform from the [downloads page](https://www.terraform.io/downloads.html)
 ```
 open https://www.terraform.io/downloads.html
 ```
@@ -62,6 +62,6 @@ yarn run deploy
 Deploying will take a few minutes but you'll need to wait about 15-20 minutes before the CloudFront distribution is created. By then the Lambda function should have ran to generate the website.
 
 ## Manually triggering the Lambda
-You can test the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). Then go to Functions -> website_generator -> Test.
+You can test the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). Then go to Functions -> website_generator -> Test. If it ran successfully you will see the result of the CloudFront invalidation.
 
 
