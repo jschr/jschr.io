@@ -3,7 +3,7 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 import { renderStatic } from 'glamor/server'
 
 import Template, { TemplateProps } from './components/Template'
-import App, { AppProps } from './components/App'
+import { AppProps } from './components/App'
 
 export interface SSROptions {
   appProps: AppProps
@@ -21,6 +21,11 @@ export interface SSR {
 export default function ssr(options: SSROptions) {
   const assets = Object.keys(options.webpackStats.compilation.assets)
   const js = assets.filter(value => value.match(/\.js$/))
+
+  // use require to ensure glamor rehydrate is called before styles are created
+  // https://github.com/threepointone/glamor/issues/64
+  const App = require('./components/App').default
+
   const { html: body, css, ids: cssIds } = renderStatic(() => {
     return renderToString(<App {...options.appProps} />)
   })
