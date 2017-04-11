@@ -1,4 +1,4 @@
-# jschr.io - a static website generator
+# A static website generator boilerplate
 
 The stack that powers my powers my [personal website](http://jschr.io).
 
