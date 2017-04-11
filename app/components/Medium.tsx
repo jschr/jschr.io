@@ -13,7 +13,7 @@ export interface MediumProps {
 export default function Medium({ username, summary }: MediumProps) {
   const href = `https://medium.com/@${username}`
   const icon = require('../assets/medium.svg')
-  const text = <span>wrote about "<em>{summary.latestStory}</em>"</span>
+  const text = `wrote about "${summary.latestStory}"`
 
   return (
     <SocialLink href={href} icon={icon} label='my stories' text={text} />
