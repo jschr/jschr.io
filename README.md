@@ -1,6 +1,6 @@
 # jschr.io - a static website generator
 
-The stack that powers my powers my [personal website](http://jschr.io).
+The stack that powers my [personal website](http://jschr.io).
 
 Featuring
 
