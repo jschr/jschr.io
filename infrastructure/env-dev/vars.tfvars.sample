@@ -1,6 +1,6 @@
-##################################
-## rename this file vars.tfvars!
-##################################
+#####################################
+## rename this file to vars.tfvars!
+#####################################
 
 # your preferred region
 region  = "us-east-1"
