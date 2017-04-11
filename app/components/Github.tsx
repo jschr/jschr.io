@@ -24,7 +24,7 @@ export default function Github({ username, summary }: GithubProps) {
   } else if (summary.commented) {
     text = `commented on ${summary.commented}`
   } else if (summary.pushed) {
-    text = `pushed ${summary.commits} commits to ${summary.pushed}`
+    text = `pushed ${summary.commits} commit${summary.commits > 1 ? 's' : ''} to ${summary.pushed}`
   }
 
   return (
