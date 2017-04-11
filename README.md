@@ -7,17 +7,15 @@ Featuring
  * [React](https://facebook.github.io/react/)
  * [Glamor](https://github.com/threepointone/glamor/)
  * [Webpack 2](https://webpack.js.org/)
- * [Webpack Static Site Generator](https://github.com/markdalgleish/static-site-generator-webpack-plugin)
+ * [Webpack Static Site Generator](https://github.com/markdalgleish/static-site-generator-webpack-plugin/)
  * [Terraform](https://www.terraform.io/)
  * [Lambda](https://aws.amazon.com/lambda/)
  * [S3](https://aws.amazon.com/s3/)
  * [CloudFront](https://aws.amazon.com/cloudfront/)
- * [Mailgun](https://www.mailgun.com/)
- * [Google Analytics](https://www.google.com/analytics/)
 
  ## How it works
 
-A scheduled Lambda function fetches a summary of my latest activity from Github, Twitter, and Medium. It then generates a new static website using a this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
+A scheduled Lambda function fetches a summary of my latest activity from Github, Twitter, and Medium. It then generates a new static website using this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
 
 Terraform is used to declaratively define and deploy all the required infrastructure to AWS after [setting a few environment variables](infrastructure/env-dev/vars.tfvars.sample) -- including a CloudFront distribution for super fast page loads and Route53 entries for your domain and emails (via Mailgun).
 
