@@ -67,7 +67,8 @@ export interface AppProps {
 
 export default class App extends React.Component<AppProps, {}> {
   componentDidMount() {
-    if (window) {
+    // only import and load webfont in browser
+    if (typeof document !== 'undefined') {
       require('webfontloader').load({
         google: {
           families: ['Lato:400', 'Monsterat:600']
