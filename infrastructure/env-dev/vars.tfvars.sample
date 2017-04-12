@@ -57,6 +57,3 @@ mailgun_smtp_password   = "..."
 # go to https://analytics.google.com and create a new property
 # paste the tracking code below
 ga_tracking_id  = "UA-XXXXXX-1"
-
-# app package location, you dont need to change this unless you modify the build process
-app_package     = "../../build/app-package.zip"
