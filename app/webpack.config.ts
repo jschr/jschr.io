@@ -4,10 +4,6 @@ import * as StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin
 
 import getProps from './getProps'
 
-interface Env {
-  NODE_ENV?: string
-}
-
 export default async function createWebpackConfig(): Promise<webpack.Configuration> {
   const isProduction = process.env.NODE_ENV === 'production'
 
