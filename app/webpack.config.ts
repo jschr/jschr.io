@@ -7,16 +7,8 @@ import getProps from './getProps'
 export default async function createWebpackConfig(): Promise<webpack.Configuration> {
   const isProduction = process.env.NODE_ENV === 'production'
 
-  const appProps = await getProps({
-    name: process.env.NAME,
-    description: process.env.DESCRIPTION,
-    email: process.env.EMAIL,
-    github: process.env.GITHUB_USERNAME,
-    twitter: process.env.TWITTER_USERNAME,
-    medium: process.env.MEDIUM_USERNAME,
-    linkedIn: process.env.LINKEDIN_USERNAME,
-    linkedInPosition: process.env.LINKEDIN_POSITION
-  })
+  // fetch the latest app props
+  const appProps = await getProps()
 
   return {
     devtool: 'source-map',
@@ -95,9 +87,9 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
         paths: ['/'],
         locals: {
           appProps,
+          enableDevServer: !isProduction,
           enableGoogleAnalytics: isProduction,
-          trackingId: process.env.GA_TRACKING_ID,
-          enableDevServer: !isProduction
+          trackingId: process.env.GA_TRACKING_ID
         }
       })
     ]

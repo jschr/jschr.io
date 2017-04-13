@@ -5,30 +5,35 @@ import feed = require('rss-to-json')
 
 import { AppProps } from './components/App'
 
-export interface Options {
-  name: string
-  description: string
-  email: string
-  github: string
-  twitter: string
-  medium: string
-  linkedIn: string
-  linkedInPosition: string
-}
+export default async function getProps(): Promise<AppProps> {
+  const name = 'Jordan Schroter'
+  const description = 'Coder & UX Enthusiast'
+  const email = 'hello@jschr.io'
+  const github = 'jschr'
+  const twitter = '_jschr'
+  const medium = '_jschr'
+  const linkedIn = 'jordan-schroter'
+  const linkedInPosition = 'cto / co-founder at spin.io'
 
-export default async function getProps(opts: Options): Promise<AppProps> {
   const [ githubSummary, twitterSummary, mediumSummary ] = await Promise.all([
-    getGithubSummary(opts.github),
-    getTwitterSummary(opts.twitter),
-    getMediumSummary(opts.medium)
+    getGithubSummary(github),
+    getTwitterSummary(twitter),
+    getMediumSummary(medium)
   ])
 
   return {
-    ...opts,
+    name,
+    description,
+    email,
+    github,
+    twitter,
+    medium,
+    linkedIn,
+    linkedInPosition,
     githubSummary,
     twitterSummary,
     mediumSummary,
-    linkedInSummary: { currentPosition: opts.linkedInPosition }
+    linkedInSummary: { currentPosition: linkedInPosition }
   }
 }
 
