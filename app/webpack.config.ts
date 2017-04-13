@@ -37,8 +37,6 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
 
     module: {
       loaders: [
-        // we need to run js through babel because uglify doesn't support all of es2015
-        // https://github.com/terinjokes/gulp-uglify/issues/66
         {
           test: /\.tsx?$/,
           loaders: [
@@ -48,7 +46,8 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
           exclude: /node_modules/
         },
 
-        // still need babel loader for compiling js in lambda
+        // we need to run js through babel because uglify doesn't support all of es2015
+        // https://github.com/terinjokes/gulp-uglify/issues/66
         {
           test: /\.js?$/,
           loaders: [
