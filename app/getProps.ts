@@ -60,7 +60,7 @@ async function getTwitterSummary(username: string): Promise<any> {
 
   const getTweets = promisify<any, {}, {}>(twitter.get, { context: twitter })
   const tweets = await getTweets('statuses/user_timeline', { screen_name: username, include_rts: true })
-  const latestTweet = tweets.find(tweet => tweet.favorited)
+  const latestTweet = tweets[0]
   const summary = { latestTweetCreatedAt: latestTweet.created_at }
 
   return summary
