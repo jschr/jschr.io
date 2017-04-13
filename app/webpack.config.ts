@@ -63,6 +63,11 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
             'url-loader?limit=10000',
           ],
           exclude: /node_modules/
+        },
+
+        {
+          test: /\.(woff|woff2|ttf|eot)$/,
+          loader: 'base64-font-loader'
         }
       ]
     },

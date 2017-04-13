@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { css } from 'glamor'
+import { css, fontFace } from 'glamor'
 
 import Container from './Container'
 import Content from './Content'
@@ -9,6 +9,18 @@ import Twitter from './Twitter'
 import Medium from './Medium'
 import LinkedIn from './LinkedIn'
 import Contact from './Contact'
+
+fontFace({
+  fontFamily: 'Lato',
+  fontWeight: 400,
+  src: `url(${require('../assets/Lato-Regular.ttf')}) format('truetype')`
+})
+
+fontFace({
+  fontFamily: 'Monsterrat',
+  fontWeight: 600,
+  src: `url(${require('../assets/Montserrat-Bold.ttf')}) format('truetype')`
+})
 
 css.global('html', {
   fontSize: '12px',
@@ -67,14 +79,18 @@ export interface AppProps {
 
 export default class App extends React.Component<AppProps, {}> {
   componentDidMount() {
+    // no longer using webfontloader and inlining the fonts in the css
+    // to prevent FTOC but leaving this as an example or requiring a lib
+    // that depends on browser APIs and breaks ssr
+
     // only import and load webfont in browser
-    if (typeof document !== 'undefined') {
-      require('webfontloader').load({
-        google: {
-          families: ['Lato:400', 'Monsterat:600']
-        }
-      })
-    }
+    // if (typeof document !== 'undefined') {
+    //   require('webfontloader').load({
+    //     google: {
+    //       families: ['Lato:400', 'Monsterat:600']
+    //     }
+    //   })
+    // }
   }
 
   render() {
