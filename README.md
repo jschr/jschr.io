@@ -1,6 +1,6 @@
 # jschr.io - a static website generator
 
-The stack that powers my [personal website](http://jschr.io).
+The stack that powers my [personal website](http://jschr.io) and wrote about [in this post](https://hackernoon.com/building-a-static-website-generator-with-react-and-terraform-823be0b24b12).
 
 Featuring
 
