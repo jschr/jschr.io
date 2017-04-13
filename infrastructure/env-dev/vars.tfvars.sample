@@ -39,7 +39,7 @@ twitter_access_token_secret   = "..."
 # create an account at https://www.mailgun.com if you don't have one
 # get your api key from the accounts page: https://app.mailgun.com/app/account/security
 #
-# you will need to manully trigger domain verification through mailgun after the first deploy
+# you will need to trigger domain verification through mailgun after the first deploy
 # if you don't want to wait 24 hours: https://app.mailgun.com/app/domains
 #
 # you can setup mailgun to forward all emails to another account (ie. gmail) using routes
