@@ -7,7 +7,7 @@ const styles = {
     marginBottom: '1.5rem'
   }),
 
-  name: css({
+  title: css({
     fontSize: '1.75rem',
     fontWeight: 400,
     color: '#bbb',
@@ -35,14 +35,14 @@ const styles = {
 }
 
 export interface HeadingProps {
-  name: string
+  title: string
   description: string
 }
 
-export default function Heading({ name, description }: HeadingProps) {
+export default function Heading({ title, description }: HeadingProps) {
   return (
     <div {...styles.container}>
-      <h1 {...styles.name}>{name}</h1>
+      <h1 {...styles.title}>{title}</h1>
       <h2 {...styles.description}>{description}</h2>
     </div>
   )

@@ -13,7 +13,7 @@ export interface TemplateProps {
 }
 
 export default function Template(props: TemplateProps) {
-  const { name, description } = props.ssr.props
+  const { title, description } = props.ssr.props
 
   return (
     <html lang='en' data-timestamp={(new Date()).toISOString()}>
@@ -23,7 +23,7 @@ export default function Template(props: TemplateProps) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <link rel='shortcut icon' href={require('../assets/favicon.png')} />
-        <title>{`${name} | ${description}`}</title>
+        <title>{`${title} | ${description}`}</title>
         <style>{props.css}</style>
       </head>
       <body>

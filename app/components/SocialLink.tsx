@@ -79,7 +79,7 @@ export interface SocialLinkProps {
 export default function SocialLink({ icon, label, text, href, color }: SocialLinkProps) {
   return (
     <a href={href} {...styles.container}>
-      <div className='icon' {...styles.icon} style={{ backgroundImage: `url(${icon})` }}/>
+      <div className='icon' {...styles.icon} style={{ backgroundImage: `url(${require(`../assets/${icon}`)})` }}/>
       <div className='text' {...styles.textContainer}>
         <div {...styles.label}>{ label }</div>
         <div {...styles.text}>{ text }</div>

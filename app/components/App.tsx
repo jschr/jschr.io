@@ -4,11 +4,8 @@ import { css, fontFace } from 'glamor'
 import Container from './Container'
 import Content from './Content'
 import Heading from './Heading'
-import Github from './Github'
-import Twitter from './Twitter'
-import Medium from './Medium'
-import LinkedIn from './LinkedIn'
 import Contact from './Contact'
+import SocialLink, { SocialLinkProps } from './SocialLink'
 
 fontFace({
   fontFamily: 'Lato',
@@ -64,17 +61,10 @@ css.global('#react-root', {
 })
 
 export interface AppProps {
-  name: string
+  title: string
   description: string
   email: string
-  github: string
-  githubSummary: any
-  twitter: string
-  twitterSummary: any
-  medium: string
-  mediumSummary: any
-  linkedIn: string
-  linkedInSummary: any
+  socialLinks: SocialLinkProps[]
 }
 
 export default class App extends React.Component<AppProps, {}> {
@@ -95,27 +85,19 @@ export default class App extends React.Component<AppProps, {}> {
 
   render() {
     const {
-      name,
-      email,
+      title,
       description,
-      github,
-      githubSummary,
-      twitter,
-      twitterSummary,
-      medium,
-      mediumSummary,
-      linkedIn,
-      linkedInSummary
+      socialLinks,
+      email
     } = this.props
 
     return (
       <Container>
         <Content>
-          <Heading name={name} description={description} />
-          <Github username={github} summary={githubSummary} />
-          <Twitter username={twitter} summary={twitterSummary} />
-          <Medium username={medium} summary={mediumSummary} />
-          <LinkedIn username={linkedIn} summary={linkedInSummary} />
+          <Heading title={title} description={description} />
+          { socialLinks.map((props, index) =>
+            <SocialLink key={index} {...props} />)
+          }
         </Content>
         <Contact email={email} />
       </Container>

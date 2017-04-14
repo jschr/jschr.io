@@ -1,19 +1,27 @@
 import axios from 'axios'
 import * as Twit from 'twit'
 import { promisify } from 'bluebird'
+import * as moment from 'moment'
+import * as ellipsize from 'ellipsize'
 import feed = require('rss-to-json')
 
 import { AppProps } from './components/App'
 
+export interface Summary {
+  text: string
+  href: string
+}
+
+const TEXT_LENGTH = 100
+
 export default async function getProps(): Promise<AppProps> {
-  const name = 'Jordan Schroter'
+  const title = 'Jordan Schroter'
   const description = 'Coder & UX Enthusiast'
   const email = 'hello@jschr.io'
   const github = 'jschr'
   const twitter = '_jschr'
   const medium = '_jschr'
   const linkedIn = 'jordan-schroter'
-  const linkedInPosition = 'cto / co-founder at spin.io'
 
   const [ githubSummary, twitterSummary, mediumSummary ] = await Promise.all([
     getGithubSummary(github),
@@ -22,40 +30,66 @@ export default async function getProps(): Promise<AppProps> {
   ])
 
   return {
-    name,
+    title,
     description,
     email,
-    github,
-    twitter,
-    medium,
-    linkedIn,
-    linkedInPosition,
-    githubSummary,
-    twitterSummary,
-    mediumSummary,
-    linkedInSummary: { currentPosition: linkedInPosition }
+    socialLinks: [
+      {
+        icon: 'github.svg',
+        color: '#4183c4',
+        label: 'my code',
+        text: githubSummary.text,
+        href: githubSummary.href,
+      },
+      {
+        icon: 'medium.svg',
+        color: '#fff',
+        label: 'my stories',
+        text: mediumSummary.text,
+        href: mediumSummary.href
+      },
+      {
+        icon: 'twitter.svg',
+        color: '#55acee',
+        label: 'my thoughts',
+        text: twitterSummary.text,
+        href: twitterSummary.href
+      },
+      {
+        icon: 'linkedin.svg',
+        color: '#0976b4',
+        label: 'my nine-to-five',
+        text: 'cto / co-founder at spin.io',
+        href: 'https://www.linkedin.com/in/jordan-schroter'
+      }
+    ]
   }
 }
 
-async function getGithubSummary(username: string): Promise<any> {
+async function getGithubSummary(username: string): Promise<Summary> {
   const { data: activity } = await axios.get(`https://api.github.com/users/${username}/events`)
   const allowedEvents = ['WatchEvent', 'IssueCommentEvent', 'PushEvent']
   const latestEvent = activity.find(event => allowedEvents.indexOf(event.type) >= 0)
 
-  let summary
+  const repo = latestEvent.repo.name
+  let text
 
   if (latestEvent.type === 'WatchEvent') {
-    summary = { following: latestEvent.repo.name }
+    text = `started following ${repo}`
   } else if (latestEvent.type === 'IssueCommentEvent') {
-    summary = { commented: latestEvent.repo.name }
+    text = `commented on ${repo}`
   } else if (latestEvent.type === 'PushEvent') {
-    summary = { pushed: latestEvent.repo.name, commits: latestEvent.payload.commits.length }
+    const commits = latestEvent.payload.commits.length
+    text = `pushed ${commits} commit${commits > 1 ? 's' : ''} to ${repo}`
   }
 
-  return summary
+  return {
+    text,
+    href: `https://github.com/${repo}`
+  }
 }
 
-async function getTwitterSummary(username: string): Promise<any> {
+async function getTwitterSummary(username: string): Promise<Summary> {
   const twitter = new Twit({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -66,15 +100,20 @@ async function getTwitterSummary(username: string): Promise<any> {
   const getTweets = promisify<any, {}, {}>(twitter.get, { context: twitter })
   const tweets = await getTweets('statuses/user_timeline', { screen_name: username, include_rts: true })
   const latestTweet = tweets[0]
-  const summary = { latestTweetCreatedAt: latestTweet.created_at }
 
-  return summary
+  return {
+    text: `tweeted about ${moment(new Date(latestTweet.created_at)).fromNow()}`,
+    href: `https://twitter.com/@${username}`
+  }
 }
 
-async function getMediumSummary(username: string): Promise<any> {
+async function getMediumSummary(username: string): Promise<Summary> {
   const getFeed = promisify<any, {}>(feed.load, { context: feed })
   const { items: stories } = await getFeed(`https://medium.com/feed/@${username}`)
-  const summary = { latestStory: stories[0].title }
+  const latestStory = stories[0]
 
-  return summary
+  return {
+    text: `wrote about "${ellipsize(latestStory.title, TEXT_LENGTH)}"`,
+    href: latestStory.url
+  }
 }
