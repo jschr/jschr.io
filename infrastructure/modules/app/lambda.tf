@@ -53,8 +53,7 @@ resource "aws_lambda_function" "website_generator" {
         var.env_vars,
         map(
           "S3_BUCKET", aws_s3_bucket.website.bucket,
-          "CF_DISTRIBUTION",
-          aws_cloudfront_distribution.s3_distribution.id
+          "CF_DISTRIBUTION", aws_cloudfront_distribution.s3_distribution.id
         )
       )
     }"
@@ -62,9 +61,9 @@ resource "aws_lambda_function" "website_generator" {
 }
 
 resource "aws_lambda_permission" "allow_generate_website_event" {
-    statement_id    = "AllowExecutionFromCloudWatch"
-    action          = "lambda:InvokeFunction"
-    function_name   = "${aws_lambda_function.website_generator.function_name}"
-    principal       = "events.amazonaws.com"
-    source_arn      = "${aws_cloudwatch_event_rule.generate_website_event.arn}"
+  statement_id    = "AllowExecutionFromCloudWatch"
+  action          = "lambda:InvokeFunction"
+  function_name   = "${aws_lambda_function.website_generator.function_name}"
+  principal       = "events.amazonaws.com"
+  source_arn      = "${aws_cloudwatch_event_rule.generate_website_event.arn}"
 }
