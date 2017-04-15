@@ -1,7 +1,6 @@
 import axios from 'axios'
 import * as Twit from 'twit'
 import { promisify } from 'bluebird'
-import * as moment from 'moment'
 import * as ellipsize from 'ellipsize'
 import feed = require('rss-to-json')
 
@@ -13,6 +12,10 @@ export interface Summary {
 }
 
 const TEXT_LENGTH = 100
+
+function stripHtml(str:string): string {
+  return str.replace(/(?:https?):\/\/[\n\S]+/g, '')
+}
 
 export default async function getProps(): Promise<AppProps> {
   const title = 'Jordan Schroter'
@@ -102,8 +105,8 @@ async function getTwitterSummary(username: string): Promise<Summary> {
   const latestTweet = tweets[0]
 
   return {
-    text: `tweeted about ${moment(new Date(latestTweet.created_at)).fromNow()}`,
-    href: `https://twitter.com/@${username}`
+    text: ellipsize(stripHtml(latestTweet.text), TEXT_LENGTH),
+    href: `https://twitter.com/@${username}/status/${latestTweet.id_str}`
   }
 }
 
@@ -113,7 +116,7 @@ async function getMediumSummary(username: string): Promise<Summary> {
   const latestStory = stories[0]
 
   return {
-    text: `wrote about "${ellipsize(latestStory.title, TEXT_LENGTH)}"`,
+    text: ellipsize(latestStory.title, TEXT_LENGTH),
     href: latestStory.url
   }
 }
