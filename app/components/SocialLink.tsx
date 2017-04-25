@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { css } from 'glamor'
+import { XmlEntities } from 'html-entities'
+
+const entities = new XmlEntities()
 
 const styles = {
   container: css({
@@ -82,7 +85,7 @@ export default function SocialLink({ icon, label, text, href, color }: SocialLin
       <div className='icon' {...styles.icon} style={{ backgroundImage: `url(${require(`../assets/${icon}`)})` }}/>
       <div className='text' {...styles.textContainer}>
         <div {...styles.label}>{ label }</div>
-        <div {...styles.text}>{ text }</div>
+        <div {...styles.text}>{ entities.decode(text) }</div>
         <div className='underline' {...styles.underline} style={{ backgroundColor: color }} />
       </div>
     </a>
