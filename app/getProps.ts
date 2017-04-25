@@ -88,7 +88,10 @@ async function getGithubSummary(username: string): Promise<Summary> {
 
   return {
     text,
-    href: `https://github.com/${repo}`
+    href: `https://github.com/${username}`,
+    // uncomment this if you'd prefer to link to the repository of the event rather than your
+    // github profile
+    // href: `https://github.com/${repo}`
   }
 }
 
