@@ -1,8 +1,8 @@
-import axios from 'axios'
-import * as Twit from 'twit'
-import { promisify } from 'bluebird'
 import * as ellipsize from 'ellipsize'
-import feed = require('rss-to-json')
+
+import * as github from './sources/github'
+import * as twitter from './sources/twitter'
+import * as medium from './sources/medium'
 
 import { AppProps } from './components/App'
 
@@ -21,15 +21,15 @@ export default async function getProps(): Promise<AppProps> {
   const title = 'Jordan Schroter'
   const description = 'Coder & UX Enthusiast'
   const email = 'hello@jschr.io'
-  const github = 'jschr'
-  const twitter = '_jschr'
-  const medium = '_jschr'
-  const linkedIn = 'jordan-schroter'
+  const githubUsername = 'jschr'
+  const twitterUsername = '_jschr'
+  const mediumUsername = '_jschr'
+  const linkedInUsername = 'jordan-schroter'
 
-  const [ githubSummary, twitterSummary, mediumSummary ] = await Promise.all([
-    getGithubSummary(github),
-    getTwitterSummary(twitter),
-    getMediumSummary(medium)
+  const [ githubActivity, twitterTimeline, mediumStories ] = await Promise.all([
+    github.getActivity(githubUsername),
+    twitter.getTimeline(twitterUsername),
+    medium.getStories(mediumUsername),
   ])
 
   return {
@@ -41,22 +41,19 @@ export default async function getProps(): Promise<AppProps> {
         icon: 'github.svg',
         color: '#4183c4',
         label: 'my code',
-        text: githubSummary.text,
-        href: githubSummary.href,
+        ...getGithubSummary(githubUsername, githubActivity)
       },
       {
         icon: 'medium.svg',
         color: '#fff',
         label: 'my stories',
-        text: mediumSummary.text,
-        href: mediumSummary.href
+        ...getMediumSummary(mediumUsername, mediumStories)
       },
       {
         icon: 'twitter.svg',
         color: '#55acee',
         label: 'my thoughts',
-        text: twitterSummary.text,
-        href: twitterSummary.href
+        ...getTwitterSummary(twitterUsername, twitterTimeline)
       },
       {
         icon: 'linkedin.svg',
@@ -69,8 +66,7 @@ export default async function getProps(): Promise<AppProps> {
   }
 }
 
-async function getGithubSummary(username: string): Promise<Summary> {
-  const { data: activity } = await axios.get(`https://api.github.com/users/${username}/events`)
+function getGithubSummary(username: string, activity: github.Activity): Summary {
   const allowedEvents = ['WatchEvent', 'IssueCommentEvent', 'PushEvent']
   const latestEvent = activity.find(event => allowedEvents.indexOf(event.type) >= 0)
 
@@ -88,24 +84,12 @@ async function getGithubSummary(username: string): Promise<Summary> {
 
   return {
     text,
-    href: `https://github.com/${username}`,
-    // uncomment this if you'd prefer to link to the repository of the event rather than your
-    // github profile
-    // href: `https://github.com/${repo}`
+    href: `https://github.com/${username}`
   }
 }
 
-async function getTwitterSummary(username: string): Promise<Summary> {
-  const twitter = new Twit({
-    consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-    access_token: process.env.TWITTER_ACCESS_TOKEN,
-    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-  })
-
-  const getTweets = promisify<any, {}, {}>(twitter.get, { context: twitter })
-  const tweets = await getTweets('statuses/user_timeline', { screen_name: username, include_rts: true })
-  const latestTweet = tweets[0]
+function getTwitterSummary(username: string, timeline: twitter.Timeline): Summary {
+  const latestTweet = timeline[0]
 
   return {
     text: ellipsize(stripHtml(latestTweet.text), TEXT_LENGTH),
@@ -113,9 +97,7 @@ async function getTwitterSummary(username: string): Promise<Summary> {
   }
 }
 
-async function getMediumSummary(username: string): Promise<Summary> {
-  const getFeed = promisify<any, {}>(feed.load, { context: feed })
-  const { items: stories } = await getFeed(`https://medium.com/feed/@${username}`)
+function getMediumSummary(username: string, stories: medium.Stories): Summary {
   const latestStory = stories[0]
 
   return {
