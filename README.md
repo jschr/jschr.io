@@ -17,7 +17,7 @@ Featuring
 
 A scheduled Lambda function fetches a summary of latest activity from Github, Twitter, and Medium. It then generates a new static website using this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
 
-Terraform is used to create the required resources in AWS after [setting a few environment variables](infrastructure/env-dev/vars.tfvars.sample) -- including Route53 entries for your domain and emails (via Mailgun).
+Terraform is used to create the required resources in AWS after [setting a few environment variables](infrastructure/env-dev/vars.tfvars.sample), including Route53 entries for your domain and emails (via Mailgun).
 
 ## Quick start
 
