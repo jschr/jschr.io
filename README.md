@@ -15,9 +15,9 @@ Featuring
 
  ## How it works
 
-A scheduled Lambda function fetches a summary of my latest activity from Github, Twitter, and Medium. It then generates a new static website using this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
+A scheduled Lambda function fetches a summary of latest activity from Github, Twitter, and Medium. It then generates a new static website using this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
 
-Terraform is used to declaratively define and deploy all the required infrastructure to AWS after [setting a few environment variables](infrastructure/env-dev/vars.tfvars.sample) -- including a CloudFront distribution for super fast page loads and Route53 entries for your domain and emails (via Mailgun).
+Terraform is used to create the required resources in AWS after [setting a few environment variables](infrastructure/env-dev/vars.tfvars.sample), including Route53 entries for your domain and emails (via Mailgun).
 
 ## Quick start
 
@@ -67,6 +67,6 @@ yarn run deploy
 Deploying will take a few minutes but you'll need to wait about 15-20 minutes before the CloudFront distribution is created. By then the Lambda function should have ran to generate the website.
 
 ## Manually triggering the Lambda
-You can run the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). Then go to Functions -> website_generator -> Test. If it ran successfully you will see the result of the CloudFront invalidation.
+You can invoke the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). Then go to Functions -> website_generator -> Test. If it ran successfully you will see the result of the CloudFront invalidation.
 
 
