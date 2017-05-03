@@ -15,11 +15,11 @@ const styles = {
     color: '#fff',
 
     ':hover .icon': {
-      transform: 'translateX(1rem)'
+      transform: 'translateX(1.25rem)'
     },
 
     ':hover .text': {
-      transform: 'translateX(1.5rem)'
+      transform: 'translateX(1.25rem)'
     },
 
     ':hover .underline': {
