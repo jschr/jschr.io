@@ -36,7 +36,6 @@ export default async function getProps(): Promise<AppProps> {
     reddit.getActivity(redditUsername),
   ])
 
-
   // top 3 social links sorted by most recent
   const socialLinks = [
     {
@@ -136,16 +135,14 @@ function getRedditSummary(username: string, activity: reddit.Activity): Summary 
   let text
 
   if (latestEvent.permalink) {
-    // is a post
     if (latestEvent.author === username) {
       text = `submitted ${latestEvent.title}`
     } else {
-      text = `upvoted following ${latestEvent.title}`
+      text = `upvoted ${latestEvent.title}`
     }
 
     href = latestEvent.permalink
   } else if (latestEvent.link_permalink) {
-    // is a comment
     text = `commented on ${latestEvent.link_title}`
     href = latestEvent.link_permalink
   }
