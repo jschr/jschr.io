@@ -15,7 +15,7 @@ Featuring
 
  ## How it works
 
-A scheduled Lambda function fetches a summary of latest activity from Github, Twitter, and Medium. It then generates a new static website using this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
+A scheduled Lambda function fetches a summary of latest activity from Github, Twitter, Reddit and Medium. It then generates a new static website using this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
 
 Terraform is used to create the required resources in AWS after [setting a few environment variables](infrastructure/env-dev/vars.tfvars.sample), including Route53 entries for your domain and emails (via Mailgun).
 
@@ -69,4 +69,11 @@ Deploying will take a few minutes but you'll need to wait about 15-20 minutes be
 ## Manually triggering the Lambda
 You can invoke the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). Then go to Functions -> website_generator -> Test. If it ran successfully you will see the result of the CloudFront invalidation.
 
+## Customizing
+
+You can create your own [components](app/components) to customize the look and feel.
+
+Modify the props passed to your components in [getProps](app/getProps.ts).
+
+You can add more [data sources](app/sources) to make your site more dynamic.
 
