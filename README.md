@@ -77,3 +77,6 @@ Modify the props passed to your components in [getProps](app/getProps.ts).
 
 You can add more [data sources](app/sources) to make your site more dynamic.
 
+## What does it cost?
+
+Basically nothing. My AWS bill is about $5/mo (not including domain registration fees).
