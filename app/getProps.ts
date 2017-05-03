@@ -3,12 +3,14 @@ import * as ellipsize from 'ellipsize'
 import * as github from './sources/github'
 import * as twitter from './sources/twitter'
 import * as medium from './sources/medium'
+import * as reddit from './sources/reddit'
 
 import { AppProps } from './components/App'
 
 export interface Summary {
   text: string
   href: string
+  createdAt: Date
 }
 
 const TEXT_LENGTH = 100
@@ -25,44 +27,61 @@ export default async function getProps(): Promise<AppProps> {
   const twitterUsername = '_jschr'
   const mediumUsername = '_jschr'
   const linkedInUsername = 'jordan-schroter'
+  const redditUsername = 'jschr'
 
-  const [ githubActivity, twitterTimeline, mediumStories ] = await Promise.all([
+  const [ githubActivity, twitterTimeline, mediumStories, redditActivity ] = await Promise.all([
     github.getActivity(githubUsername),
     twitter.getTimeline(twitterUsername),
     medium.getStories(mediumUsername),
+    reddit.getActivity(redditUsername),
   ])
+
+
+  // top 3 social links sorted by most recent
+  const socialLinks = [
+    {
+      icon: 'github.svg',
+      color: '#4183c4',
+      label: 'my code',
+      ...getGithubSummary(githubUsername, githubActivity)
+    },
+    {
+      icon: 'medium.svg',
+      color: '#fff',
+      label: 'my stories',
+      ...getMediumSummary(mediumUsername, mediumStories)
+    },
+    {
+      icon: 'twitter.svg',
+      color: '#55acee',
+      label: 'my thoughts',
+      ...getTwitterSummary(twitterUsername, twitterTimeline)
+    },
+    {
+      icon: 'reddit.svg',
+      color: '#ff4500',
+      label: 'my interests',
+      ...getRedditSummary(redditUsername, redditActivity)
+    }
+  ]
+    .sort((a, b) => +b.createdAt - +a.createdAt)
+    .slice(0, 3)
+
+  // always have linkedin as the 4th item
+  socialLinks.push({
+    icon: 'linkedin.svg',
+    color: '#0976b4',
+    label: 'my nine-to-five',
+    text: 'cto / co-founder at spin.io',
+    href: 'https://www.linkedin.com/in/jordan-schroter',
+    createdAt: new Date()
+  })
 
   return {
     title,
     description,
     email,
-    socialLinks: [
-      {
-        icon: 'github.svg',
-        color: '#4183c4',
-        label: 'my code',
-        ...getGithubSummary(githubUsername, githubActivity)
-      },
-      {
-        icon: 'medium.svg',
-        color: '#fff',
-        label: 'my stories',
-        ...getMediumSummary(mediumUsername, mediumStories)
-      },
-      {
-        icon: 'twitter.svg',
-        color: '#55acee',
-        label: 'my thoughts',
-        ...getTwitterSummary(twitterUsername, twitterTimeline)
-      },
-      {
-        icon: 'linkedin.svg',
-        color: '#0976b4',
-        label: 'my nine-to-five',
-        text: 'cto / co-founder at spin.io',
-        href: 'https://www.linkedin.com/in/jordan-schroter'
-      }
-    ]
+    socialLinks
   }
 }
 
@@ -84,7 +103,8 @@ function getGithubSummary(username: string, activity: github.Activity): Summary 
 
   return {
     text,
-    href: `https://github.com/${username}`
+    href: `https://github.com/${username}`,
+    createdAt: new Date(latestEvent.created_at)
   }
 }
 
@@ -93,7 +113,8 @@ function getTwitterSummary(username: string, timeline: twitter.Timeline): Summar
 
   return {
     text: ellipsize(stripHtml(latestTweet.text), TEXT_LENGTH),
-    href: `https://twitter.com/@${username}/status/${latestTweet.id_str}`
+    href: `https://twitter.com/@${username}/status/${latestTweet.id_str}`,
+    createdAt: new Date(latestTweet.created_at)
   }
 }
 
@@ -102,6 +123,37 @@ function getMediumSummary(username: string, stories: medium.Stories): Summary {
 
   return {
     text: ellipsize(latestStory.title, TEXT_LENGTH),
-    href: latestStory.url
+    href: latestStory.url,
+    createdAt: new Date(latestStory.created)
   }
 }
+
+function getRedditSummary(username: string, activity: reddit.Activity): Summary {
+  const allowedSubreddits = ['web_design', 'webdev', 'reactjs', 'entrepreneur', 'startups', 'tech', 'technology', 'userexperience', 'aws', 'devops', 'programming', 'chromeos', 'javascript']
+  const latestEvent = activity.find(event => allowedSubreddits.indexOf(event.subreddit) >= 0)
+
+  let href
+  let text
+
+  if (latestEvent.permalink) {
+    // is a post
+    if (latestEvent.author === username) {
+      text = `submitted ${latestEvent.title}`
+    } else {
+      text = `upvoted following ${latestEvent.title}`
+    }
+
+    href = latestEvent.permalink
+  } else if (latestEvent.link_permalink) {
+    // is a comment
+    text = `commented on ${latestEvent.link_title}`
+    href = latestEvent.link_permalink
+  }
+
+  return {
+    text,
+    href,
+    createdAt: new Date(latestEvent.created * 1000)
+  }
+}
+

@@ -16,6 +16,7 @@ export interface Event {
     url: string
   }
   payload: any
+  created_at: string
 }
 
 export type Activity = Event[]

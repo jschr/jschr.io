@@ -52,6 +52,7 @@ export interface Tweet {
   lang: string
   user: User
   retweeted_status: Tweet
+  created_at: string
 }
 
 export type Timeline = Tweet[]
