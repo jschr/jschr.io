@@ -135,15 +135,10 @@ function getRedditSummary(username: string, activity: reddit.Activity): Summary 
   let text
 
   if (latestEvent.permalink) {
-    if (latestEvent.author === username) {
-      text = `submitted ${latestEvent.title}`
-    } else {
-      text = `upvoted ${latestEvent.title}`
-    }
-
+    text = latestEvent.title
     href = latestEvent.permalink
   } else if (latestEvent.link_permalink) {
-    text = `commented on ${latestEvent.link_title}`
+    text = latestEvent.link_title
     href = latestEvent.link_permalink
   }
 
