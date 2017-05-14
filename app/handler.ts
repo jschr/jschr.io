@@ -61,8 +61,8 @@ async function compile(config: webpack.Configuration): Promise<File[]> {
 
 async function upload(file: File): Promise<any> {
   const contents = await gzip(file.contents)
-  // cache html for 1 minute and other assets for 2 hours
-  const expiresIn = file.type === 'text/html' ? 60 : 7200
+  // cache html for 15 minutes and other assets for 2 hours
+  const expiresIn = file.type === 'text/html' ? 900 : 7200
 
   const params = {
     Bucket: process.env.S3_BUCKET,
