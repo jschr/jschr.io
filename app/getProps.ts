@@ -29,6 +29,7 @@ export default async function getProps(): Promise<AppProps> {
   const mediumUsername = '_jschr'
   const linkedInUsername = 'jordan-schroter'
   const redditUsername = 'jschr'
+  const spotifyPlaylistUri = 'spotify:user:_jschr:playlist:6SQWPySZnyi30YIR2GfZti'
 
   const [
     githubActivity,
@@ -80,7 +81,7 @@ export default async function getProps(): Promise<AppProps> {
       icon: 'spotify.svg',
       color: '#1ed760',
       label: 'my favourite tracks',
-      ...getSpotifySummary(spotifyCurrentlyPlaying)
+      ...getSpotifySummary(spotifyPlaylistUri, spotifyCurrentlyPlaying)
     })
   } else {
     socialLinks.push({
@@ -166,10 +167,12 @@ function getRedditSummary(username: string, activity: reddit.Activity): Summary 
   }
 }
 
-function getSpotifySummary(currentlyPlaying: spotify.CurrentlyPlaying): Summary {
+function getSpotifySummary(playlistUri: string, currentlyPlaying: spotify.CurrentlyPlaying): Summary {
   return {
     text: `${currentlyPlaying.item.name} by ${currentlyPlaying.item.artists[0].name}`,
-    href: currentlyPlaying.item.uri,
+    // hardcoded playlist uri, replace with your own public playlist or
+    // use currentlyPlaying.item.uri if you'd prefer to use the track uri
+    href: playlistUri,
     createdAt: new Date()
   }
 }
