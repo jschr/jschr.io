@@ -67,7 +67,11 @@ yarn run deploy
 Deploying will take a few minutes but you'll need to wait about 15-20 minutes before the CloudFront distribution is created. By then the Lambda function should have ran to generate the website.
 
 ## Manually triggering the Lambda
-You can invoke the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). Then go to Functions -> website_generator -> Test. If it ran successfully you will see the result of the CloudFront invalidation.
+You can invoke the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). 
+
+Then go to Functions -> website_generator -> Test. 
+
+If it ran successfully you will see the result of the CloudFront invalidation.
 
 ## Customizing
 
@@ -77,3 +81,8 @@ Modify the props passed to your components in [getProps](app/getProps.ts).
 
 You can add more [data sources](app/sources) to make your site more dynamic.
 
+Feel free to [create an issue](https://github.com/jschr/jschr.io/issues) with any questions about deploying your own version!
+
+## What does it cost?
+
+Basically nothing. My AWS bill is about $5/mo (not including domain registration fees).
