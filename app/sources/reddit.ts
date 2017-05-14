@@ -19,5 +19,5 @@ export type Activity = Event[]
 export async function getActivity(username: string): Promise<Activity> {
   const { data: activity } = await axios.get(`https://www.reddit.com/user/${username}/.json`)
 
-  return activity.data.children.map(item => item.data)
+  return activity.data.children.map((item) => item.data)
 }
