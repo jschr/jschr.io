@@ -74,9 +74,9 @@ export default async function getProps(): Promise<AppProps> {
     .sort((a, b) => +b.createdAt - +a.createdAt)
     .slice(0, 3)
 
-  // if spotify is currently playing add it to the begining otherwise add linkedin to the end
+  // if spotify is currently playing add it otherwise add linkedin
   if (spotifyCurrentlyPlaying.is_playing) {
-    socialLinks.unshift({
+    socialLinks.push({
       icon: 'spotify.svg',
       color: '#1ed760',
       label: 'my favourite tracks',
