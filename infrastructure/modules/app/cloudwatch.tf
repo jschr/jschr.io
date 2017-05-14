@@ -1,7 +1,7 @@
 resource "aws_cloudwatch_event_rule" "generate_website_event" {
   name                  = "generate_website_event"
-  description           = "Fires every ${var.render_interval} minutes"
-  schedule_expression   = "rate(${var.render_interval} minutes)"
+  description           = "Fires every ${var.render_interval}"
+  schedule_expression   = "rate(${var.render_interval})"
 }
 
 resource "aws_cloudwatch_event_target" "generate_website_event_target" {
