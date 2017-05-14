@@ -67,9 +67,9 @@ yarn run deploy
 Deploying will take a few minutes but you'll need to wait about 15-20 minutes before the CloudFront distribution is created. By then the Lambda function should have ran to generate the website.
 
 ## Manually triggering the Lambda
-You can invoke the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda). 
+You can invoke the Lambda function by logging into the [aws console](http://console.aws.amazon.com) and heading over to the [Lambda management section](https://console.aws.amazon.com/lambda).
 
-Then go to Functions -> website_generator -> Test. 
+Then go to Functions -> website_generator -> Test.
 
 If it ran successfully you will see the result of the CloudFront invalidation.
 
@@ -85,4 +85,6 @@ Feel free to [create an issue](https://github.com/jschr/jschr.io/issues) with an
 
 ## What does it cost?
 
-Basically nothing. My AWS bill is about $5/mo (not including domain registration fees).
+You are mosly paying for CloudFront invalidations which happens once every 15 minutes. The first 1000 invalidations are free, afterwhich it's $0.005 per invalidation path. With the default settings thats about 2,880 invaldations per month.
+
+My bill is ~$10/mo USD.
