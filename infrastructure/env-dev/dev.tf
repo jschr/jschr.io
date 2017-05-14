@@ -23,4 +23,5 @@ module "app" {
   domain                        = "${var.domain}"
   env_vars                      = "${var.env_vars}"
   mailgun_smtp_password         = "${var.mailgun_smtp_password}"
+  render_interval               = 2 # minutes
 }
