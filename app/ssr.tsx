@@ -20,7 +20,7 @@ export interface SSR {
 
 export default function ssr(options: SSROptions) {
   const assets = Object.keys(options.webpackStats.compilation.assets)
-  const js = assets.filter(value => value.match(/\.js$/))
+  const js = assets.filter((value) => value.match(/\.js$/))
 
   // use require to ensure glamor rehydrate is called before styles are created
   // https://github.com/threepointone/glamor/issues/64

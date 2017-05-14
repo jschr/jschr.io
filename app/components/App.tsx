@@ -68,7 +68,7 @@ export interface AppProps {
 }
 
 export default class App extends React.Component<AppProps, {}> {
-  componentDidMount() {
+  public componentDidMount() {
     // no longer using webfontloader and inlining the fonts in the css
     // to prevent FTOC but leaving this as an example or requiring a lib
     // that depends on browser APIs and breaks ssr
@@ -83,7 +83,7 @@ export default class App extends React.Component<AppProps, {}> {
     // }
   }
 
-  render() {
+  public render() {
     const {
       title,
       description,

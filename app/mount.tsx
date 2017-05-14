@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { render } from 'react-dom'
-const rehydrate = require('glamor').rehydrate // missing type definiton for rehydrate
+// missing type definiton for rehydrate
+const rehydrate = require('glamor').rehydrate // tslint:disable-line
 
 import { SSR } from './ssr'
-
 
 interface SSRWindow extends Window {
   ssr: SSR
 }
 
-export default function () {
+export default function mount() {
   const ssr = (window as SSRWindow).ssr
 
   rehydrate(ssr.cssIds)
