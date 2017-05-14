@@ -4,6 +4,7 @@ import * as github from './sources/github'
 import * as twitter from './sources/twitter'
 import * as medium from './sources/medium'
 import * as reddit from './sources/reddit'
+import * as spotify from './sources/spotify'
 
 import { AppProps } from './components/App'
 
@@ -15,7 +16,7 @@ export interface Summary {
 
 const TEXT_LENGTH = 100
 
-function stripHtml(str:string): string {
+function stripHtml(str: string): string {
   return str.replace(/(?:https?):\/\/[\n\S]+/g, '')
 }
 
@@ -29,14 +30,21 @@ export default async function getProps(): Promise<AppProps> {
   const linkedInUsername = 'jordan-schroter'
   const redditUsername = 'jschr'
 
-  const [ githubActivity, twitterTimeline, mediumStories, redditActivity ] = await Promise.all([
+  const [
+    githubActivity,
+    twitterTimeline,
+    mediumStories,
+    redditActivity,
+    spotifyCurrentlyPlaying
+  ] = await Promise.all([
     github.getActivity(githubUsername),
     twitter.getTimeline(twitterUsername),
     medium.getStories(mediumUsername),
     reddit.getActivity(redditUsername),
+    spotify.getCurrentlyPlaying()
   ])
 
-  // top 3 social links sorted by most recent
+  // sort social links sorted by most recent and take the top 3
   const socialLinks = [
     {
       icon: 'github.svg',
@@ -66,15 +74,24 @@ export default async function getProps(): Promise<AppProps> {
     .sort((a, b) => +b.createdAt - +a.createdAt)
     .slice(0, 3)
 
-  // always have linkedin as the 4th item
-  socialLinks.push({
-    icon: 'linkedin.svg',
-    color: '#0976b4',
-    label: 'my nine-to-five',
-    text: 'cto / co-founder at spin.io',
-    href: 'https://www.linkedin.com/in/jordan-schroter',
-    createdAt: new Date()
-  })
+  // if spotify is currently playing add it to the begining otherwise add linkedin to the end
+  if (spotifyCurrentlyPlaying.is_playing) {
+    socialLinks.unshift({
+      icon: 'spotify.svg',
+      color: '#1ed760',
+      label: 'my favourite tracks',
+      ...getSpotifySummary(spotifyCurrentlyPlaying)
+    })
+  } else {
+    socialLinks.push({
+      icon: 'linkedin.svg',
+      color: '#0976b4',
+      label: 'my nine-to-five',
+      text: 'cto / co-founder at spin.io',
+      href: 'https://www.linkedin.com/in/jordan-schroter',
+      createdAt: new Date()
+    })
+  }
 
   return {
     title,
@@ -86,7 +103,7 @@ export default async function getProps(): Promise<AppProps> {
 
 function getGithubSummary(username: string, activity: github.Activity): Summary {
   const allowedEvents = ['WatchEvent', 'IssueCommentEvent', 'PushEvent']
-  const latestEvent = activity.find(event => allowedEvents.indexOf(event.type) >= 0)
+  const latestEvent = activity.find((event) => allowedEvents.indexOf(event.type) >= 0)
 
   const repo = latestEvent.repo.name
   let text
@@ -128,8 +145,8 @@ function getMediumSummary(username: string, stories: medium.Stories): Summary {
 }
 
 function getRedditSummary(username: string, activity: reddit.Activity): Summary {
-  const allowedSubreddits = ['web_design', 'webdev', 'reactjs', 'entrepreneur', 'startups', 'tech', 'technology', 'userexperience', 'aws', 'devops', 'programming', 'chromeos', 'javascript']
-  const latestEvent = activity.find(event => allowedSubreddits.indexOf(event.subreddit) >= 0)
+  const allowedSubreddits = ['web_design', 'webdev', 'reactjs', 'entrepreneur', 'startups', 'tech', 'technology', 'userexperience', 'aws', 'devops', 'programming', 'chromeos', 'javascript'] // tslint:disable-line
+  const latestEvent = activity.find((event) => allowedSubreddits.indexOf(event.subreddit) >= 0)
 
   let href
   let text
@@ -149,3 +166,10 @@ function getRedditSummary(username: string, activity: reddit.Activity): Summary 
   }
 }
 
+function getSpotifySummary(currentlyPlaying: spotify.CurrentlyPlaying): Summary {
+  return {
+    text: `${currentlyPlaying.item.name} by ${currentlyPlaying.item.artists[0].name}`,
+    href: currentlyPlaying.item.uri,
+    createdAt: new Date()
+  }
+}

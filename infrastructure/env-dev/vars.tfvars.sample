@@ -41,6 +41,18 @@ env_vars = {
   TWITTER_ACCESS_TOKEN          = ""
   TWITTER_ACCESS_TOKEN_SECRET   = ""
 
+  # spotify refresh token
+  # create an app at https://developer.spotify.com/my-applications
+  # add a redirect uri for http://localhost
+  # open in browser: https://accounts.spotify.com/en/authorize?client_id={APP_CLIENT_ID}&redirect_uri=http:%2F%2Flocalhost&scope=user-read-playback-state&response_type=code
+  # after authenticating, grab the code from the redirect url
+  # use postman or curl to create a refresh token:
+  #   ie. curl -H "Authorization: Basic {BASE_64(CLIENT_ID, CLIENT_SECRET)}" -d grant_type=authorization_code -d code={CODE} -d redirect_uri=http:%2F%2Flocalhost https://accounts.spotify.com/api/token
+  # see: https://developer.spotify.com/web-api/authorization-guide/#authorization-code-flow
+  SPOTIFY_CLIENT_ID             = ""
+  SPOTIFY_CLIENT_SECRET         = ""
+  SPOTIFY_REFRESH_TOKEN         = ""
+
   # google analytics
   # go to https://analytics.google.com and create a new property
   # paste the tracking code below
