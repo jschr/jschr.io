@@ -28,6 +28,7 @@ export default async function getProps(): Promise<AppProps> {
   const twitterUsername = '_jschr'
   const mediumUsername = '_jschr'
   const linkedInUsername = 'jordan-schroter'
+  const linkedInPosition = 'engineer @ getmira.com'
   const redditUsername = 'jschr'
   const spotifyPlaylistUri = 'spotify:user:_jschr:playlist:6SQWPySZnyi30YIR2GfZti'
 
@@ -88,7 +89,7 @@ export default async function getProps(): Promise<AppProps> {
       icon: 'linkedin.svg',
       color: '#0976b4',
       label: 'my nine-to-five',
-      text: 'cto / co-founder at spin.io',
+      text: linkedInPosition,
       href: 'https://www.linkedin.com/in/jordan-schroter',
       createdAt: new Date()
     })
