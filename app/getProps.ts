@@ -150,20 +150,9 @@ function getRedditSummary(username: string, activity: reddit.Activity): Summary 
   const allowedSubreddits = ['web_design', 'webdev', 'reactjs', 'entrepreneur', 'startups', 'tech', 'technology', 'userexperience', 'aws', 'devops', 'programming', 'chromeos', 'javascript'] // tslint:disable-line
   const latestEvent = activity.find((event) => allowedSubreddits.indexOf(event.subreddit) >= 0)
 
-  let href
-  let text
-
-  if (latestEvent.permalink) {
-    text = latestEvent.title
-    href = latestEvent.permalink
-  } else if (latestEvent.link_permalink) {
-    text = latestEvent.link_title
-    href = latestEvent.link_permalink
-  }
-
   return {
-    text,
-    href,
+    text: latestEvent.link_title,
+    href: latestEvent.link_permalink,
     createdAt: new Date(latestEvent.created * 1000)
   }
 }
