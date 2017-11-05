@@ -89,5 +89,6 @@ You are mosly paying for CloudFront invalidations which by default happens [ever
 
 The first 1000 invalidations are free, afterwhich it's $0.005 per invalidation path. With the default settings thats about 2,880 invaldations per month for a total of ~$10/mo USD.
 
-You can increase the render interval to 45 minutes if you'd prefer to stay within the free tier.
+You can increase the [render interval](infrastructure/env-dev/dev.tf#L26) to 45 minutes if you'd prefer to stay within the free tier.
 
+To prevent unexpected charges it is always a good idea to set up a [budget alarm](http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-alarms.html).
