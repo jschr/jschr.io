@@ -8,11 +8,11 @@
     "clean": "rimraf ./build/app && rimraf ./build/app-package.zip",
     "build": "tsc",
     "copy": "copy ./package.json ./build/app && copy ./app/assets/* ./build",
-    "install-production": "cd ./build/app && npm install --production && cd ../../",
-    "pack": "cd ./build/app && cross-zip . ../app-package.zip && cd ../..",
-    "terraform-show": "cd ./infrastructure/env-dev && terraform show && cd ../../",
-    "terraform-plan": "cd ./infrastructure/env-dev && terraform get && terraform plan --var-file ./vars.tfvars && cd ../../",
-    "terraform-apply": "cd ./infrastructure/env-dev && terraform get && terraform apply --var-file ./vars.tfvars && cd ../../",
+    "install-production": "cd ./build/app && npm install --production",
+    "pack": "cd ./build/app && cross-zip . ../app-package.zip",
+    "terraform-show": "cd ./infrastructure/env-dev && terraform show",
+    "terraform-plan": "cd ./infrastructure/env-dev && terraform get && terraform plan --var-file ./vars.tfvars",
+    "terraform-apply": "cd ./infrastructure/env-dev && terraform get && terraform apply --var-file ./vars.tfvars",
     "deploy": "npm run clean && npm run build && npm run copy && npm run install-production && npm run pack && npm run terraform-apply"
   },
   "dependencies": {
