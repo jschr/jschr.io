@@ -28,10 +28,10 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
     },
 
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.tsx?$/,
-          loaders: [
+          use: [
             'babel-loader?presets[]=es2015',
             'awesome-typescript-loader',
           ],
@@ -42,7 +42,7 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
         // https://github.com/terinjokes/gulp-uglify/issues/66
         {
           test: /\.js?$/,
-          loaders: [
+          use: [
             'babel-loader?presets[]=es2015',
           ],
           exclude: /node_modules/
@@ -50,7 +50,7 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
 
         {
           test: /\.(jpe?g|png|gif|svg)$/,
-          loaders: [
+          use: [
             'url-loader?limit=10000',
           ],
           exclude: /node_modules/
