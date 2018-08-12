@@ -5,7 +5,7 @@ const twitter = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
   access_token: process.env.TWITTER_ACCESS_TOKEN,
-  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 })
 
 export interface User {
@@ -39,7 +39,7 @@ export interface Tweet {
   text: string
   truncated: boolean
   source: string
-  in_reply_to_status_id?: string
+  in_reply_to_status_id?: number
   in_reply_to_status_id_str?: string
   in_reply_to_user_id?: string
   in_reply_to_user_id_str?: string
@@ -59,7 +59,10 @@ export type Timeline = Tweet[]
 
 export async function getTimeline(username: string): Promise<Timeline> {
   const getTweets = promisify<any, {}, {}>(twitter.get, { context: twitter })
-  const tweets = await getTweets('statuses/user_timeline', { screen_name: username, include_rts: true })
+  const tweets = await getTweets('statuses/user_timeline', {
+    screen_name: username,
+    include_rts: true,
+  })
 
   return tweets
 }

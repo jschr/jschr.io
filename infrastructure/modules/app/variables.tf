@@ -1,5 +1,10 @@
-variable "domain"                   { }
-variable "app_package"              { }
-variable "render_interval"          { }
-variable "env_vars"                 { type = "map" }
-variable "mailgun_smtp_password"    { }
+variable app_package {}
+variable node_env {}
+variable render_interval {}
+variable domain {}
+variable twitter_consumer_key {}
+variable twitter_consumer_secret {}
+variable twitter_access_token {}
+variable twitter_access_token_secret {}
+variable ga_tracking_id {}
+variable ssl_certificate_arn {}

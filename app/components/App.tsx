@@ -1,106 +1,191 @@
 import * as React from 'react'
-import { css, fontFace } from 'glamor'
-
-import Container from './Container'
-import Content from './Content'
+import * as ellipsize from 'ellipsize'
+import { AllHtmlEntities } from 'html-entities'
+import { injectGlobal, css } from 'emotion'
+import * as stripHtml from 'striptags'
+import { Activity as GithubActivity } from '../sources/github'
+import { Timeline as TwitterTimeline } from '../sources/twitter'
+import { Stories as MediumStories } from '../sources/medium'
+import { Activity as RedditActivity } from '../sources/reddit'
+import theme from '../theme'
+import Button from './Button'
 import Heading from './Heading'
-import Contact from './Contact'
-import SocialLink, { SocialLinkProps } from './SocialLink'
-
-fontFace({
-  fontFamily: 'Lato',
-  fontWeight: 400,
-  src: `url(${require('../assets/Lato-Regular.ttf')}) format('truetype')`
-})
-
-fontFace({
-  fontFamily: 'Monsterrat',
-  fontWeight: 600,
-  src: `url(${require('../assets/Montserrat-Bold.ttf')}) format('truetype')`
-})
-
-css.global('html', {
-  fontSize: '12px',
-  height: '100%'
-})
-
-// hack to workaround media queries support with css.global
-// https://github.com/threepointone/glamor/issues/202
-css.insert(`
-  @media screen and (max-width: 640px), screen and (max-height: 640px) {
-    html {
-      font-size: 10px;
-    }
-  }
-
-  @media screen and (max-width: 480px), screen and (max-height: 480px) {
-    html {
-      font-size: 9px;
-    }
-  }
-
-  @media screen and (max-width: 320px), screen and (max-height: 320px) {
-    html {
-      font-size: 8px;
-    }
-  }
-`)
-
-css.global('body', {
-  fontFamily: 'Lato, sans-serif',
-  fontWeight: 400,
-  color: '#fff',
-  backgroundColor: '#2D2D37',
-  height: '100%',
-  padding: 0,
-  margin: 0,
-})
-
-css.global('#react-root', {
-  height: '100%',
-})
+import Indent from './Indent'
+import Link from './Link'
+import Text from './Text'
 
 export interface AppProps {
-  title: string
-  description: string
-  email: string
-  socialLinks: SocialLinkProps[]
+  githubActivity: GithubActivity
+  twitterActivity: TwitterTimeline
+  mediumActivity: MediumStories
+  redditActivity: RedditActivity
 }
 
-export default class App extends React.Component<AppProps, {}> {
-  public componentDidMount() {
-    // no longer using webfontloader and inlining the fonts in the css
-    // to prevent FTOC but leaving this as an example or requiring a lib
-    // that depends on browser APIs and breaks ssr
+injectGlobal({
+  '*, *:before, *:after': {
+    boxSizing: 'border-box',
+  },
 
-    // only import and load webfont in browser
-    // if (typeof document !== 'undefined') {
-    //   require('webfontloader').load({
-    //     google: {
-    //       families: ['Lato:400', 'Monsterat:600']
-    //     }
-    //   })
-    // }
-  }
+  html: {
+    fontSize: theme.fontSizes.root,
+  },
 
-  public render() {
-    const {
-      title,
-      description,
-      socialLinks,
-      email
-    } = this.props
+  body: {
+    display: 'flex',
+    fontFamily: theme.fonts.serif,
+    margin: 0,
+    background: theme.colors.background,
+  },
 
-    return (
-      <Container>
-        <Content>
-          <Heading title={title} description={description} />
-          { socialLinks.map((props, index) =>
-            <SocialLink key={index} {...props} />)
-          }
-        </Content>
-        <Contact email={email} />
-      </Container>
-    )
-  }
+  '#react-root': {
+    display: 'grid',
+    justifyItems: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    width: '100vw',
+  },
+})
+
+const styles = {
+  container: css({
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: 700,
+    padding: theme.gutters.lg,
+
+    ' > *': {
+      marginBottom: theme.gutters.lg,
+    },
+    ' > *:last-child': {
+      marginBottom: 0,
+    },
+  }),
+
+  details: css({
+    display: 'flex',
+    flexDirection: 'column',
+
+    ' > *': {
+      marginBottom: theme.gutters.md,
+    },
+    ' > *:last-child': {
+      marginBottom: 0,
+    },
+  }),
+
+  actions: css({
+    display: 'flex',
+
+    ' > *': {
+      marginRight: theme.gutters.sm,
+    },
+    ' > *:last-child': {
+      marginRight: 0,
+    },
+  }),
 }
+
+const entities = new AllHtmlEntities()
+
+const App: React.SFC<AppProps> = ({
+  githubActivity,
+  twitterActivity,
+  mediumActivity,
+  redditActivity,
+}) => {
+  const allowedGithubEvents = ['WatchEvent', 'IssueCommentEvent', 'PushEvent']
+  const latestGithubEvent = githubActivity.find(
+    event => allowedGithubEvents.indexOf(event.type) >= 0,
+  )
+
+  const githubRepo = latestGithubEvent.repo.name
+  let githubLabel
+
+  if (latestGithubEvent.type === 'WatchEvent') {
+    githubLabel = 'started following'
+  } else if (latestGithubEvent.type === 'IssueCommentEvent') {
+    githubLabel = 'commented on'
+  } else if (latestGithubEvent.type === 'PushEvent') {
+    const commits = latestGithubEvent.payload.commits.length
+    githubLabel =
+      commits > 0
+        ? `pushed ${commits} commit${commits > 1 ? 's' : ''} to`
+        : `pushed to`
+  }
+
+  const latestMediumArticle = mediumActivity.find(
+    // Hack to filter out replies.
+    story => stripHtml(story.description).length > 600,
+  )
+
+  const allowedSubreddits = [
+    'web_design',
+    'webdev',
+    'reactjs',
+    'entrepreneur',
+    'startups',
+    'tech',
+    'technology',
+    'userexperience',
+    'aws',
+    'devops',
+    'programming',
+    'chromeos',
+    'javascript',
+  ]
+
+  const latestRedditComment = redditActivity.find(
+    event => allowedSubreddits.indexOf(event.subreddit) >= 0,
+  )
+
+  const latestTweet = twitterActivity.find(
+    tweet => !tweet.in_reply_to_status_id,
+  )
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.details}>
+        <Heading>Hi, I'm Jordan.</Heading>
+        <Text>A full-stack developer who recently—</Text>
+        <Indent>
+          {githubLabel}{' '}
+          <Link href={`https://github.com/${githubRepo}`}>{githubRepo}</Link>
+        </Indent>
+        <Indent>
+          wrote about{' '}
+          <Link href={latestMediumArticle.link}>
+            "{latestMediumArticle.title}"
+          </Link>
+        </Indent>
+        <Indent>
+          commented on{' '}
+          <Link href={latestRedditComment.link_permalink}>
+            "{latestRedditComment.link_title}"
+          </Link>
+        </Indent>
+        <Indent>
+          tweeted{' '}
+          <Link
+            href={`https://twitter.com/@${
+              latestTweet.user.screen_name
+            }/status/${latestTweet.id_str}`}
+          >
+            "{ellipsize(entities.decode(stripHtml(latestTweet.text)), 100)}"
+          </Link>
+        </Indent>
+      </div>
+      <Text>
+        I'm currently building cool stuff at{' '}
+        <Link href="https://www.getmira.com">Mira</Link>.
+      </Text>
+      <div className={styles.actions}>
+        <Button href="https://github.com/jschr">My Github</Button>
+        <Button href="mailto:hello@jschr.io" secondary>
+          Contact Me
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+export default App
