@@ -1,10 +1,12 @@
 node_modules/
 build/
 app/config.ts
-.env
+*.env
 *.log
 
 .terraform/
 *.tfstate
 *.tfstate.*
 *.tfvars
+*.plan
+.DS_STORE
