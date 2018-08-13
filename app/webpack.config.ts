@@ -4,7 +4,9 @@ import * as StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin
 
 import getProps from './getProps'
 
-export default async function createWebpackConfig(): Promise<webpack.Configuration> {
+export default async function createWebpackConfig(): Promise<
+  webpack.Configuration
+> {
   const isProduction = process.env.NODE_ENV === 'production'
 
   // fetch the latest app props
@@ -14,74 +16,51 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
     devtool: 'source-map',
 
     entry: {
-      main: path.resolve(__dirname, isProduction ? 'index.js' : 'index.ts')
+      main: path.resolve(__dirname, isProduction ? 'index.js' : 'index.ts'),
     },
 
     output: {
       filename: `[name].js`,
       path: path.resolve(__dirname, 'build'),
-      libraryTarget: 'umd'
+      libraryTarget: 'umd',
+      globalObject: 'this',
     },
 
     resolve: {
-      extensions: ['.ts', '.tsx', '.js']
+      extensions: ['.ts', '.tsx', '.js'],
+    },
+
+    optimization: {
+      minimize: isProduction,
     },
 
     module: {
       rules: [
         {
           test: /\.tsx?$/,
-          use: [
-            'babel-loader?presets[]=es2015',
-            'awesome-typescript-loader',
-          ],
-          exclude: /node_modules/
-        },
-
-        // we need to run js through babel because uglify doesn't support all of es2015
-        // https://github.com/terinjokes/gulp-uglify/issues/66
-        {
-          test: /\.js?$/,
-          use: [
-            'babel-loader?presets[]=es2015',
-          ],
-          exclude: /node_modules/
+          use: ['ts-loader'],
+          exclude: /node_modules/,
         },
 
         {
           test: /\.(jpe?g|png|gif|svg)$/,
-          use: [
-            'url-loader?limit=10000',
-          ],
-          exclude: /node_modules/
+          use: ['url-loader?limit=10000'],
+          exclude: /node_modules/,
         },
 
         {
           test: /\.(woff|woff2|ttf|eot)$/,
-          loader: 'base64-font-loader'
-        }
-      ]
+          loader: 'base64-inline-loader',
+        },
+      ],
     },
 
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-        }
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        },
       }),
-
-      ...(isProduction
-        ? [
-          new webpack.optimize.UglifyJsPlugin({
-            compress: {
-              screw_ie8: true
-            }
-          })
-        ]
-        : [
-          // no dev specific plugins
-        ]
-      ),
 
       new StaticSiteGeneratorPlugin({
         paths: ['/'],
@@ -89,9 +68,9 @@ export default async function createWebpackConfig(): Promise<webpack.Configurati
           appProps,
           enableDevServer: !isProduction,
           enableGoogleAnalytics: isProduction,
-          trackingId: process.env.GA_TRACKING_ID
-        }
-      })
-    ]
+          trackingId: process.env.GA_TRACKING_ID,
+        },
+      }),
+    ],
   }
 }
