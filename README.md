@@ -1,5 +1,7 @@
 # jschr.io
 
+[![Build Status](https://travis-ci.com/jschr/jschr.io.svg?branch=production)](https://travis-ci.com/jschr/jschr.io)
+
 The static website generator that powers my [personal website](http://jschr.io) and wrote about [in this post](https://hackernoon.com/building-a-static-website-generator-with-react-and-terraform-823be0b24b12).
 
 Built with
@@ -15,6 +17,4 @@ Built with
 
 ## How it works
 
-A scheduled Lambda function fetches a summary of latest activity from Github, Twitter, Reddit and Medium. It then generates a new static website using this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3.
-
-Terraform is used to create the required resources in AWS after [setting a few environment variables](infrastructure/env-dev/vars.tfvars.sample), including Route53 entries for your domain and emails (via Mailgun).
+A scheduled Lambda function fetches a summary of latest activity from Github, Twitter, Reddit and Medium. It then generates a new static website using this [webpack config](app/webpack.config.ts) and uploads the resulting build to S3. Terraform is used to create the required resources in AWS.
