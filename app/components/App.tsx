@@ -176,7 +176,7 @@ const App: React.SFC<AppProps> = ({
       </div>
       <Text>
         I'm currently building cool stuff at{' '}
-        <Link href="https://www.getmira.com">Mira</Link>.
+        <Link href="https://www.raydiant.com">Raydiant</Link>.
       </Text>
       <div className={styles.actions}>
         <Button href="https://github.com/jschr">My Github</Button>
