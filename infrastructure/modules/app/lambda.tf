@@ -38,7 +38,7 @@ resource "aws_iam_role_policy" "website_generator_policy" {
 resource "aws_lambda_function" "website_generator" {
   filename         = "${var.app_package}"
   function_name    = "website_generator"
-  runtime          = "nodejs8.10"
+  runtime          = "nodejs10.x"
   role             = "${aws_iam_role.website_generator_role.arn}"
   handler          = "handler.default"
   timeout          = 60                                            # TODO: variable
