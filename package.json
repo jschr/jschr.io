@@ -13,7 +13,7 @@
     "update-env": "tasks/remote-env-update.sh"
   },
   "dependencies": {
-    "aws-sdk": "^2.40.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.16.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
